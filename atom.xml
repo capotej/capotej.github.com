@@ -4,7 +4,7 @@
   <title><![CDATA[RealTalk]]></title>
   <link href="http://capotej.com/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-09-30T21:18:56-07:00</updated>
+  <updated>2012-09-30T21:20:36-07:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[julio Capote]]></name>
@@ -18,7 +18,7 @@
     <link href="http://capotej.com/blog/2012/09/30/testing-out-octopress/"/>
     <updated>2012-09-30T21:18:00-07:00</updated>
     <id>http://capotej.com/blog/2012/09/30/testing-out-octopress</id>
-    <content type="html"><![CDATA[<h1>Test 123</h1>
+    <content type="html"><![CDATA[<h3>Test 123</h3>
 
 <p>blah</p>
 ]]></content>
