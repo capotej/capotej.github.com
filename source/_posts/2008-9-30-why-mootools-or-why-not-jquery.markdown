@@ -7,10 +7,7 @@ permalink: /post/52467447/why-mootools-or-why-not-jquery
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2008/09/post/52369865/i-would-buy-and-frame-this.html)  [Index](../../../index-2.html)  [Next](../../../posts/2008/10/post/54058512/tabbing-through-fields-vertically.html) ### Why MooTools (or Why not JQuery)
+ ### Why MooTools (or Why not JQuery)
 September 30 2008, 10:26 AM by Julio Capote
 
 I’ve been toying around with MooTools a bit lately, and I’ve found the experience quite enjoyable and refreshing. Naturally, I[twittered](http://twitter.com/capotej/statuses/939831956) about it and went along my merry way. Moments later (and much to my surprise), I had a direct message from John Resig himself asking “Why, what’s wrong with jQuery?”. I was pretty taken aback that he would take time from his surely busy day to message a total stranger in an effort to improve his project or at least gain an insight in the everyday life of a js developer (it’s not like DHH would personally message people that are dumping rails to use merb). I figured he deserved a straight, honest answer; One that at least would be longer than[140 characters](http://twitter.com/capotej/statuses/940082809) (even though I managed to use every single one). So it begs the question, Why MooTools?
@@ -27,17 +24,4 @@ I’ve been toying around with MooTools a bit lately, and I’ve found the exper
 
 
 
-It’s not like I’m never going to use JQuery again; It simply isn’t my default js framework any longer.#### 725 views and 3 responses
-
-- Jun 13 2011,  7:14 PMRick responded:For the past two days I've been researching the differences between these two.  I always seemed to gravitate to mootools but figured I'd better check the competition before making a choice, which is hands down mootools.
-
-The prototype extending had me worried a bit but I'm pretty confident that the improvement is worth any risk.  Also I think most extending is done on the common and stable stuff and the developers are aware of the risks and proceed cautiously.
-
-Anyway, all just to say that this article has hit the nail on the head perfectly.  You have put to words my exact findings.
-
-Thanks,Rick
-- Feb  4 2012,  9:48 PMMohammed responded:Thanks for the great article. I've dabbled a little with jQuery, but not mooTools, so lets give it a try.
-- Mar  7 2012,  4:48 AMstreamline online responded:Make an impression on nice ideas along with definitely good suggestions thank you just for this amazing checklist.
-
-Thank you for taking time for you to article and so excellent content articles.
-
+It’s not like I’m never going to use JQuery again; It simply isn’t my default js framework any longer.

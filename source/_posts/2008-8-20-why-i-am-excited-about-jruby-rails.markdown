@@ -7,10 +7,7 @@ permalink: /post/46737450/why-i-am-excited-about-jruby-rails
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2008/08/svn/posts/1203-domenico-demarco-and-pizza-as-art.html)  [Index](../../../index.html)  [Next](../../../posts/2008/08/humor/eecs-difference-explained.html) ### Why I am excited about JRuby/Rails
+ ### Why I am excited about JRuby/Rails
 August 20 2008,  1:21 PM by Julio Capote
 
 There are some new developments ripening on the JRuby/Rails front that’s going to make things awesome in the coming months:
@@ -19,6 +16,4 @@ There are some new developments ripening on the JRuby/Rails front that’s going
 
 
 
-Can’t wait…#### 34 views and 0 responses
-
-
+Can’t wait…

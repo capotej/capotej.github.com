@@ -7,10 +7,7 @@ permalink: /post/390050440/on-google-buzz
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2009/11/post/245405012/on-php-frameworks.html)  [Index](../../../index-2.html)  [Next](../../../posts/2010/12/post/2546786852/what-i-released-in-2010.html) ### On Google Buzz
+ ### On Google Buzz
 February 14 2010,  6:31 PM by Julio Capote
 
 Summary: In this post I attempt to rationalize the creation of Google Buzz.
@@ -25,6 +22,4 @@ DiscussionLet’s face it, trying to have a deep discussion is next to impossibl
 
 Pain PointsNothing is perfect, and Google Buzz is surely is not. For one, it’s, some say, intrusive, arrival rubbed a lot of people the wrong way. You’ll find all kinds of posts on the internet about how they feel betrayed by Google for forcing a social network down their throat. Others felt that their gmail was their “work area” and didn’t want to bothered with such folly (understandably so). That’s why I feel it should’ve been deployed like this: Wave style invites and if you buzz someone that doesn’t have an invite, they just get it like a regular email with a link on the bottom to join. The early adopters will bring in those they feel will like the service and use it with them. The other point is that you can’t filter out buzzed tweets (when you tweet, Google Buzz will buzz it automatically) so you end seeing tweets twice.
 
-ConclusionSo in conclusion, will Buzz replace Twitter for me? No. But it will definitely replace those quickie emails I fire off to the same group of people over and over. I feel like they are trying to market Google Wave to a bigger, more mainstream audience. If that’s the case, I look forward to see what else Google Buzz will bring to the table in the future.#### 1077 views and 0 responses
-
-
+ConclusionSo in conclusion, will Buzz replace Twitter for me? No. But it will definitely replace those quickie emails I fire off to the same group of people over and over. I feel like they are trying to market Google Wave to a bigger, more mainstream audience. If that’s the case, I look forward to see what else Google Buzz will bring to the table in the future.

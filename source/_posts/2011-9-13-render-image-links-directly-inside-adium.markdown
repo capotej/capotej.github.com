@@ -7,10 +7,7 @@ permalink: /render-image-links-directly-inside-adium
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2012/01/alfred-extension-for-creating-wunderlist-task.html)  [Index](../../../index.html)  [Next](../../../posts/2011/08/dont-pee-in-the-pool.html) ### Render image links directly inside Adium
+ ### Render image links directly inside Adium
 September 13 2011,  8:59 AM by Julio Capote
 
 Last night I delightfully discovered that Adium Message Styles are just html, css, and javascript rendered inside a webview. The next natural step was to write something in it, so I wrote a Message Style that tries to render any image link directly inline the conversation (campfire style).![../../../image/2011/09/31663815-x.png] 
@@ -23,7 +20,4 @@ Installation is simple, just download: 
 
 and extract into ~/Library/Adium 2.0/Message Styles (create if necessary). Then choose the TOP Stockholm theme (no idea why there are two entries), and close your chat window. It should be activated next time a chat window opens.
 
-![../../../image/2011/09/31664576-y.png] #### 1077 views and 1 response
-
-- Sep 14 2011,  6:32 AMVincent Chu liked this post.
-
+![../../../image/2011/09/31664576-y.png] 

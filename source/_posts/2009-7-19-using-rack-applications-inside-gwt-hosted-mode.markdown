@@ -7,10 +7,7 @@ permalink: /post/145035194/using-rack-applications-inside-gwt-hosted-mode
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2009/01/post/67873462/useful-rails-routing-tips.html)  [Index](../../../index-2.html)  [Next](../../../posts/2009/11/post/245405012/on-php-frameworks.html) ### Using Rack applications inside GWT Hosted mode
+ ### Using Rack applications inside GWT Hosted mode
 July 19 2009,  6:51 PM by Julio Capote
 
 This guide will show you how you can use JRuby to run any Rack application inside Google Web Toolkit’s (GWT) hosted mode server so your interface and your backend are of the Same Origin.
@@ -54,6 +51,4 @@ require 'sinatra'require 'open-uri'class MyApp < Sinatra::Base  get '/showpage' 
 9. Run your new awesome setup:
 ant hosted
 
-Now when navigate to[http://localhost:8888/api/helloworld](http://localhost:8888/api/helloworld) or[http://localhost:8888/api/showpage](http://localhost:8888/api/showpage) you should see the Sinatra application being served via GWT.#### 989 views and 0 responses
-
-
+Now when navigate to[http://localhost:8888/api/helloworld](http://localhost:8888/api/helloworld) or[http://localhost:8888/api/showpage](http://localhost:8888/api/showpage) you should see the Sinatra application being served via GWT.

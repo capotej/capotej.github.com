@@ -7,10 +7,7 @@ permalink: /post/67873462/useful-rails-routing-tips
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2008/10/post/56866975/so-you-want-to-click-that-button.html)  [Index](../../../index-2.html)  [Next](../../../posts/2009/07/post/145035194/using-rack-applications-inside-gwt-hosted-mode.html) ### Useful Rails Routing tips
+ ### Useful Rails Routing tips
 January  1 2009,  3:50 PM by Julio Capote
 
 Even though I have been using Rails for fun and profit for about 2 years now, I felt I never really used it’s routing engine to its full potential. So I checked out new[Rails Routing from the outside in](http://guides.rubyonrails.org/routing_outside_in.html) guide and discovered bunch of useful tricks that I (and maybe you) had no idea you could do. Here they are:### Multiple resource definitions on a single line
@@ -46,6 +43,4 @@ This will map all GET’s to /photos/3 to the preview action of your photos cont
 This can also be  used in collections instead of singular members, just change :member to :collection
 map.resources :photos, :collection => { :search => :get }
 
-This will give you /photos/search and hit the search action within the photos controller#### 1731 views and 0 responses
-
-
+This will give you /photos/search and hit the search action within the photos controller

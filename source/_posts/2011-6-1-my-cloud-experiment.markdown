@@ -7,10 +7,7 @@ permalink: /my-cloud-experiment
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2011/07/sane-lion-gestures.html)  [Index](../../../index.html)  [Next](../../../posts/2008/08/post/45788533/i-need-to-look-at-sinatra.html) ### My cloud experiment
+ ### My cloud experiment
 June  1 2011, 10:18 AM by Julio Capote
 
 Lately I've been thinking about the best way to store and backup large amounts of personal data. It irked me that I've never been able to keep a collection of photos past 2-3 years. Either it's a machine swap or a misplaced backup, something always happens. 
@@ -34,7 +31,4 @@ Im curious as to how others have solved this problem or how Apple will solve it 
 
 
 
- #### 1123 views and 1 response
-
-- Jun  6 2011, 12:51 PMVincent Chu liked this post.
-
+ 

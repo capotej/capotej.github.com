@@ -7,10 +7,7 @@ permalink: /post/54266325/arrow-key-navigation-for-text-fields
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2008/10/post/54058512/tabbing-through-fields-vertically.html)  [Index](../../../index-2.html)  [Next](../../../posts/2008/10/post/56866975/so-you-want-to-click-that-button.html) ### Arrow key navigation for text fields
+ ### Arrow key navigation for text fields
 October 12 2008,  5:41 PM by Julio Capote
 
 Here is a class for enabling the use of arrow keys to navigate through a grid of input fields: (using mootools)
@@ -70,6 +67,4 @@ var FocusMover = new Class({
 })
 
 As you can see, the constructor takes two arguments: a selector (which should return a list of all your input fields), and the number of input field columns. So for a 4x2 table, you would set it up like this:
-var FM = new FocusMover('#mytable input', 4)#### 374 views and 0 responses
-
-
+var FM = new FocusMover('#mytable input', 4)

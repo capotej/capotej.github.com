@@ -7,10 +7,7 @@ permalink: /alfred-extension-for-creating-wunderlist-task
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2012/01/finagle-with-scala-bootstrapper.html)  [Index](../../../index.html)  [Next](../../../posts/2011/09/render-image-links-directly-inside-adium.html) ### Alfred Extension for creating Wunderlist tasks
+ ### Alfred Extension for creating Wunderlist tasks
 January  9 2012, 11:36 PM by Julio Capote
 
 While looking for a way to add wunderlist tasks via alfred, I came upon this: [http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred](http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred) 
@@ -25,7 +22,4 @@ Here's the alfred extenstion that ties it all together:
 wunderdb="/Users/$user/Library/Wunderlist/wunderlist.db"
 sqlite3 $wunderdb "insert into tasks (name, list_id) values ('{query}', 1)"`
 
-Download it here: [http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension](http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension) #### 484 views and 1 response
-
-- Jan  9 2012, 11:54 PMSachin Agarwal liked this post.
-
+Download it here: [http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension](http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension) 

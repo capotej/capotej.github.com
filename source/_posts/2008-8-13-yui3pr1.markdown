@@ -7,14 +7,9 @@ permalink: /blog/2008/08/13/yui3pr1
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2008/08/svn/posts/1186-gearheads-dont-get-it.html)  [Index](../../../index.html)  [Next](../../../posts/2008/08/post/46025296/im-sure-thats-exactly-what-they-wanted.html) ### YUI 3 Preview Release
+ ### YUI 3 Preview Release
 August 13 2008,  9:39 PM by Julio Capote[http://yuiblog.com/blog/2008/08/13/yui3pr1/](http://yuiblog.com/blog/2008/08/13/yui3pr1/) 
 
 
 
-Chockful of awesome.#### 14 views and 0 responses
-
-
+Chockful of awesome.

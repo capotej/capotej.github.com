@@ -7,12 +7,7 @@ permalink: /post/52055667/git-server-tutorial
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2008/09/post/50284462/no-way.html)  [Index](../../../index.html) ### Git Server tutorial
+ ### Git Server tutorial
 September 27 2008,  2:20 PM by Julio Capote
 
-good git server tutorial,[http://blog.commonthread.com/2008/4/14/setting-up-a-git-server](http://blog.commonthread.com/2008/4/14/setting-up-a-git-server) #### 403 views and 0 responses
-
-
+good git server tutorial,[http://blog.commonthread.com/2008/4/14/setting-up-a-git-server](http://blog.commonthread.com/2008/4/14/setting-up-a-git-server) 

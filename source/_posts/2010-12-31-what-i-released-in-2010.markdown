@@ -7,10 +7,7 @@ permalink: /post/2546786852/what-i-released-in-2010
 categories:
 ---
 
- # Julio Capote
-## This is an archived post
-This is an archived post
-[Previous](../../../posts/2010/02/post/390050440/on-google-buzz.html)  [Index](../../../index-2.html)  [Next](../../../posts/2011/01/post/2583891119/migrationfor-write-migrations-right-from-the-command.html) ### What I released in 2010
+ ### What I released in 2010
 December 31 2010,  1:29 PM by Julio Capote
 
 Here’s a recap of what I’ve worked on and released in 2010:
@@ -27,7 +24,4 @@ Here’s a recap of what I’ve worked on and released in 2010:
 
 **chewbacca:**I kinda feel bad that I took a cool name for such a lame script. Anyway it’s a set of rake tasks that provide a hair of abstraction above scp. Useful when you have a set of files locally that map to a different set of files remotely.[https://github.com/capotej/chewbacca](https://github.com/capotej/chewbacca) 
 
-I already have tons of stuff in the works for 2011!#### 1086 views and 1 response
-
-- Sep  5 2011,  5:51 AMalanbedford liked this post.
-
+I already have tons of stuff in the works for 2011!
