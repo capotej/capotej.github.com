@@ -1,0 +1,25 @@
+---
+ layout: post
+ title: "No way."
+ date: 2008-09-15 12:10
+ comments: false
+ categories:
+ ---
+
+ # Julio Capote
+## This is an archived post
+This is an archived post
+[Previous](../../../posts/2008/09/post/49186851/so-true.html)  [Index](../../../index.html)  [Next](../../../posts/2008/09/post/52055667/git-server-tutorial.html) ### No way.
+September 15 2008, 12:10 PM by Julio Capote
+
+I’m sure we’ve all been in a variant of this situation…
+Me:  I'd like to talk to you about something...
+Him: Let me guess - you want to use Smalltalk.
+Me:  Er, no...
+Him: Lisp?
+Me: Right.
+Him:  No way.
+
+Taken from[here](http://www.flownet.com/gat/jpl-lisp.html?dupe=with_honor) #### 116 views and 0 responses
+
+
