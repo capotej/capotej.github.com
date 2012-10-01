@@ -3,9 +3,9 @@
 # ----------------------- #
 
 url: http://capotej.com
-title: RealTalk
-subtitle: A blogging framework for hackers.
-author: julio Capote
+title: "@capotej"
+subtitle: blah
+author: Julio Capote
 simple_search: http://google.com/search
 description:
 
@@ -65,7 +65,7 @@ github_skip_forks: true
 
 # Twitter
 twitter_user: capotej
-twitter_tweet_count: 4
+twitter_tweet_count: 0
 twitter_show_replies: false
 twitter_follow_button: true
 twitter_show_follower_count: false

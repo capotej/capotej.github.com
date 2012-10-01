@@ -6,6 +6,15 @@ comments: true
 categories:  experiments
 ---
 
-### Test 123
+Blah blah, some code
 
-blah
+
+{% codeblock thing lang:scala%}
+
+val response = new DefaultHttpResponse(HTTP_1_1, OK)
+val mtype = exts.get(file.toString.split('.').last).getOrElse("application/octet-stream")
+response.setStatus(OK)
+response.setHeader("Content-Type", mtype)
+response.setContent(copiedBuffer(b))
+
+{% endcodeblock %}
