@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Don't pee in the pool."
- date: 2011-08-18 20:14
- comments: false
- categories:
- ---
+layout: post
+title: "Don't pee in the pool."
+date: 2011-08-18 20:14
+comments: false
+permalink: /dont-pee-in-the-pool
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

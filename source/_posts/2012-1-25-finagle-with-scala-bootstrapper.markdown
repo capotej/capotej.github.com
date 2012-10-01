@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Finagle with scala-bootstrapper"
- date: 2012-01-25 09:45
- comments: false
- categories:
- ---
+layout: post
+title: "Finagle with scala-bootstrapper"
+date: 2012-01-25 09:45
+comments: false
+permalink: /finagle-with-scala-bootstrapper
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

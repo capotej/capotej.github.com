@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Arrow key navigation for text fields"
- date: 2008-10-12 17:41
- comments: false
- categories:
- ---
+layout: post
+title: "Arrow key navigation for text fields"
+date: 2008-10-12 17:41
+comments: false
+permalink: /post/54266325/arrow-key-navigation-for-text-fields
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

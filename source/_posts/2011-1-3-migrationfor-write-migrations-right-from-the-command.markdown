@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "MigrationFor: Write migrations right from the command line!"
- date: 2011-01-3 09:48
- comments: false
- categories:
- ---
+layout: post
+title: "MigrationFor: Write migrations right from the command line!"
+date: 2011-01-3 09:48
+comments: false
+permalink: /post/2583891119/migrationfor-write-migrations-right-from-the-command
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

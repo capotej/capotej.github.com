@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Sane Lion Gestures"
- date: 2011-07-25 13:37
- comments: false
- categories:
- ---
+layout: post
+title: "Sane Lion Gestures"
+date: 2011-07-25 13:37
+comments: false
+permalink: /sane-lion-gestures
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

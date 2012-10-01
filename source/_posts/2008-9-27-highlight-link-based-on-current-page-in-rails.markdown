@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Highlight link based on current page in rails"
- date: 2008-09-27 19:47
- comments: false
- categories:
- ---
+layout: post
+title: "Highlight link based on current page in rails"
+date: 2008-09-27 19:47
+comments: false
+permalink: /post/52081481/highlight-link-based-on-current-page-in-rails
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

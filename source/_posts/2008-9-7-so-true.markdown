@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Untitled"
- date: 2008-09-7 19:08
- comments: false
- categories:
- ---
+layout: post
+title: "Untitled"
+date: 2008-09-7 19:08
+comments: false
+permalink: /post/49186851/so-true
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "My cloud experiment"
- date: 2011-06-1 10:18
- comments: false
- categories:
- ---
+layout: post
+title: "My cloud experiment"
+date: 2011-06-1 10:18
+comments: false
+permalink: /my-cloud-experiment
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

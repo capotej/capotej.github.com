@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Why MooTools (or Why not JQuery)"
- date: 2008-09-30 10:26
- comments: false
- categories:
- ---
+layout: post
+title: "Why MooTools (or Why not JQuery)"
+date: 2008-09-30 10:26
+comments: false
+permalink: /post/52467447/why-mootools-or-why-not-jquery
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

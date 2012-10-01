@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Gearheads don't get it"
- date: 2008-08-13 12:41
- comments: false
- categories:
- ---
+layout: post
+title: "Gearheads don't get it"
+date: 2008-08-13 12:41
+comments: false
+permalink: /svn/posts/1186-gearheads-dont-get-it
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

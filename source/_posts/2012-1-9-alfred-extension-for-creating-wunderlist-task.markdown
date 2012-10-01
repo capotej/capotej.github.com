@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Alfred Extension for creating Wunderlist tasks"
- date: 2012-01-9 23:36
- comments: false
- categories:
- ---
+layout: post
+title: "Alfred Extension for creating Wunderlist tasks"
+date: 2012-01-9 23:36
+comments: false
+permalink: /alfred-extension-for-creating-wunderlist-task
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Untitled"
- date: 2008-08-27 11:52
- comments: false
- categories:
- ---
+layout: post
+title: "Untitled"
+date: 2008-08-27 11:52
+comments: false
+permalink: /post/47654453/this-made-my-morning
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

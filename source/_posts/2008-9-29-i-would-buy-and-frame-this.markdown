@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Untitled"
- date: 2008-09-29 19:30
- comments: false
- categories:
- ---
+layout: post
+title: "Untitled"
+date: 2008-09-29 19:30
+comments: false
+permalink: /post/52369865/i-would-buy-and-frame-this
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

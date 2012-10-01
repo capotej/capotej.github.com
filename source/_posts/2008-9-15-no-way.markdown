@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "No way."
- date: 2008-09-15 12:10
- comments: false
- categories:
- ---
+layout: post
+title: "No way."
+date: 2008-09-15 12:10
+comments: false
+permalink: /post/50284462/no-way
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

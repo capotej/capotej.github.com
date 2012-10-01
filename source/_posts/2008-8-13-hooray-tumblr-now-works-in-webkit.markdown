@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Hooray, tumblr now works in webkit"
- date: 2008-08-13 06:14
- comments: false
- categories:
- ---
+layout: post
+title: "Hooray, tumblr now works in webkit"
+date: 2008-08-13 06:14
+comments: false
+permalink: /post/45804962/hooray-tumblr-now-works-in-webkit
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

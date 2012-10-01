@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "The difference between a computer scientist and an electrical engineer"
- date: 2008-08-21 12:58
- comments: false
- categories:
- ---
+layout: post
+title: "The difference between a computer scientist and an electrical engineer"
+date: 2008-08-21 12:58
+comments: false
+permalink: /humor/eecs-difference-explained
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

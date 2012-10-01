@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Render image links directly inside Adium"
- date: 2011-09-13 08:59
- comments: false
- categories:
- ---
+layout: post
+title: "Render image links directly inside Adium"
+date: 2011-09-13 08:59
+comments: false
+permalink: /render-image-links-directly-inside-adium
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

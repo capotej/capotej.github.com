@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Using Rack applications inside GWT Hosted mode"
- date: 2009-07-19 18:51
- comments: false
- categories:
- ---
+layout: post
+title: "Using Rack applications inside GWT Hosted mode"
+date: 2009-07-19 18:51
+comments: false
+permalink: /post/145035194/using-rack-applications-inside-gwt-hosted-mode
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

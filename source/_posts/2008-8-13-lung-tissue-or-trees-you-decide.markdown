@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Untitled"
- date: 2008-08-13 08:51
- comments: false
- categories:
- ---
+layout: post
+title: "Untitled"
+date: 2008-08-13 08:51
+comments: false
+permalink: /post/45823929/lung-tissue-or-trees-you-decide
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

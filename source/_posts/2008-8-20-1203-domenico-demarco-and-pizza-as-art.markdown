@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Domenico DeMarco and pizza as art"
- date: 2008-08-20 02:51
- comments: false
- categories:
- ---
+layout: post
+title: "Domenico DeMarco and pizza as art"
+date: 2008-08-20 02:51
+comments: false
+permalink: /svn/posts/1203-domenico-demarco-and-pizza-as-art
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

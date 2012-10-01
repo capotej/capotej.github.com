@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "On Google Buzz"
- date: 2010-02-14 18:31
- comments: false
- categories:
- ---
+layout: post
+title: "On Google Buzz"
+date: 2010-02-14 18:31
+comments: false
+permalink: /post/390050440/on-google-buzz
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

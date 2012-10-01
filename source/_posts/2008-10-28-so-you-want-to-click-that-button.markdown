@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "So you want to click that button?"
- date: 2008-10-28 21:05
- comments: false
- categories:
- ---
+layout: post
+title: "So you want to click that button?"
+date: 2008-10-28 21:05
+comments: false
+permalink: /post/56866975/so-you-want-to-click-that-button
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

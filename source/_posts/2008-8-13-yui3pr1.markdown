@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "YUI 3 Preview Release"
- date: 2008-08-13 21:39
- comments: false
- categories:
- ---
+layout: post
+title: "YUI 3 Preview Release"
+date: 2008-08-13 21:39
+comments: false
+permalink: /blog/2008/08/13/yui3pr1
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

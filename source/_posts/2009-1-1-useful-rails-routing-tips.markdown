@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Useful Rails Routing tips"
- date: 2009-01-1 15:50
- comments: false
- categories:
- ---
+layout: post
+title: "Useful Rails Routing tips"
+date: 2009-01-1 15:50
+comments: false
+permalink: /post/67873462/useful-rails-routing-tips
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

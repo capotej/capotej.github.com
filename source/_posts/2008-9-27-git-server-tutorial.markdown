@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Git Server tutorial"
- date: 2008-09-27 14:20
- comments: false
- categories:
- ---
+layout: post
+title: "Git Server tutorial"
+date: 2008-09-27 14:20
+comments: false
+permalink: /post/52055667/git-server-tutorial
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

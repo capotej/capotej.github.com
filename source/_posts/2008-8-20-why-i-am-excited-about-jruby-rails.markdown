@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Why I am excited about JRuby/Rails"
- date: 2008-08-20 13:21
- comments: false
- categories:
- ---
+layout: post
+title: "Why I am excited about JRuby/Rails"
+date: 2008-08-20 13:21
+comments: false
+permalink: /post/46737450/why-i-am-excited-about-jruby-rails
+categories:
+---
 
  # Julio Capote
 ## This is an archived post

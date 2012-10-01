@@ -1,10 +1,11 @@
 ---
- layout: post
- title: "Tabbing through fields vertically"
- date: 2008-10-11 01:54
- comments: false
- categories:
- ---
+layout: post
+title: "Tabbing through fields vertically"
+date: 2008-10-11 01:54
+comments: false
+permalink: /post/54058512/tabbing-through-fields-vertically
+categories:
+---
 
  # Julio Capote
 ## This is an archived post
