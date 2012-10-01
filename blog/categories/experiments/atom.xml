@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: experiments | RealTalk]]></title>
+  <title><![CDATA[Category: experiments | @capotej]]></title>
   <link href="http://capotej.com/blog/categories/experiments/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-09-30T21:41:16-07:00</updated>
+  <updated>2012-09-30T21:53:26-07:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[julio Capote]]></name>
@@ -18,9 +18,28 @@
     <link href="http://capotej.com/blog/2012/09/30/testing-out-octopress/"/>
     <updated>2012-09-30T21:18:00-07:00</updated>
     <id>http://capotej.com/blog/2012/09/30/testing-out-octopress</id>
-    <content type="html"><![CDATA[<h3>Test 123</h3>
+    <content type="html"><![CDATA[<p>Blah blah, some code</p>
 
-<p>blah</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>thing </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">val</span> <span class="n">response</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">DefaultHttpResponse</span><span class="o">(</span><span class="nc">HTTP_1_1</span><span class="o">,</span> <span class="nc">OK</span><span class="o">)</span>
+</span><span class='line'><span class="k">val</span> <span class="n">mtype</span> <span class="k">=</span> <span class="n">exts</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="n">toString</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="sc">&#39;.&#39;</span><span class="o">).</span><span class="n">last</span><span class="o">).</span><span class="n">getOrElse</span><span class="o">(</span><span class="s">&quot;application/octet-stream&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">setStatus</span><span class="o">(</span><span class="nc">OK</span><span class="o">)</span>
+</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">setHeader</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">mtype</span><span class="o">)</span>
+</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">setContent</span><span class="o">(</span><span class="n">copiedBuffer</span><span class="o">(</span><span class="n">b</span><span class="o">))&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   
