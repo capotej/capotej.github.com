@@ -7,9 +7,9 @@ permalink: /alfred-extension-for-creating-wunderlist-task
 categories:
 ---
 
- 
 
-While looking for a way to add wunderlist tasks via alfred, I came upon this: [http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred](http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred) 
+
+While looking for a way to add wunderlist tasks via alfred, I came upon this: [http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred](http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred)
 
 Looked cool, but I wanted to write my own that didn't depend on php.
 
@@ -21,4 +21,4 @@ Here's the alfred extenstion that ties it all together:
 wunderdb="/Users/$user/Library/Wunderlist/wunderlist.db"
 sqlite3 $wunderdb "insert into tasks (name, list_id) values ('{query}', 1)"`
 
-Download it here: [http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension](http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension) 
+Download it here: [http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension](http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension)

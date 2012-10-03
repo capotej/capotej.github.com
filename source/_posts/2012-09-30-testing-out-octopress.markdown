@@ -9,7 +9,7 @@ categories:  ['experiments','foo']
 Blah blah, some code
 
 
-{% codeblock thing lang:scala%}
+
 
 val response = new DefaultHttpResponse(HTTP_1_1, OK)
 val mtype = exts.get(file.toString.split('.').last).getOrElse("application/octet-stream")

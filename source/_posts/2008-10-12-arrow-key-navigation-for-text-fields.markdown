@@ -7,9 +7,11 @@ permalink: /post/54266325/arrow-key-navigation-for-text-fields
 categories:
 ---
 
- 
+
 
 Here is a class for enabling the use of arrow keys to navigate through a grid of input fields: (using mootools)
+
+```javascript
 var FocusMover = new Class({
 
         initialize: function(sel, col_num){
@@ -64,6 +66,7 @@ var FocusMover = new Class({
         }
 
 })
+```
 
 As you can see, the constructor takes two arguments: a selector (which should return a list of all your input fields), and the number of input field columns. So for a 4x2 table, you would set it up like this:
 var FM = new FocusMover('#mytable input', 4)
