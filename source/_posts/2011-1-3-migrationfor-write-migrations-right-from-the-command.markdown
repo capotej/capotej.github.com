@@ -26,49 +26,43 @@ It would generate db/migrate/20110103182654_add_index_posts_posts_id.rb):
 ```ruby
 class AddIndexPostsPostsId < ActiveRecord::Migration
 
-   def self.up
+  def self.up
+    add_index 'posts','posts_id'
+  end
 
-      add_index 'posts','posts_id'
-
-   end
-
-   def self.down
-     #waiting for reversible migrations in rails 3.1!
-   end
+  def self.down
+    #waiting for reversible migrations in rails 3.1!
+  end
 
 end
 ```
 
-Which you can then run normally with`rake db:migrate`
+Which you can then run normally with `rake db:migrate`
 
 Let’s look at a more complex example:
 
-`rails g migration_for create_table:posts add_column:posts:title:string
-add_column:posts:user_id:integer add_index:posts:user_id`
+`$ rails g migration_for create_table:posts add_column:posts:title:string add_column:posts:user_id:integer
+`
 
 Would generate:
+
 ```ruby
 class CreateTablePostsaddColumnPostsTitleStringaddColumnPostsUserIdIntegeraddIndexPostsUserId < ActiveRecord::Migration
 
-   def self.up
+  def self.up
+    create_table 'posts'
+    add_column 'posts','title','string'
+    add_column 'posts','user_id','integer'
+    add_index 'posts','user_id'
+  end
 
-      create_table 'posts'
-
-      add_column 'posts','title','string'
-
-      add_column 'posts','user_id','integer'
-
-      add_index 'posts','user_id'
-
-   end
-
-   def self.down
-     #waiting for reversible migrations in rails 3.1!
-   end
+  def self.down
+    #waiting for reversible migrations in rails 3.1!
+  end
 
 end
 ```
 
-It uses a lookup table with all the[activerecord transformations](http://api.rubyonrails.org/classes/ActiveRecord/Migration.html) and will only insert an expression into a migration if the method name is valid and it has the right number of arguments, so botched commands wont mess up the migration. Hope you enjoy it as much as I have!
+It uses a lookup table with all the [activerecord transformations](http://api.rubyonrails.org/classes/ActiveRecord/Migration.html) and will only insert an expression into a migration if the method name is valid and it has the right number of arguments, so botched commands wont mess up the migration. Hope you enjoy it as much as I have!
 
-Source available here:[https://github.com/capotej/migration_for](https://github.com/capotej/migration_for)
+Source available here: [https://github.com/capotej/migration_for](https://github.com/capotej/migration_for)

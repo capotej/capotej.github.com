@@ -13,20 +13,17 @@ Lately I've been thinking about the best way to store and backup large amounts o
 
 When the idea of storing or backing up everything offsite comes up, people usually throw out objections like "What if they lose all my stuff or go out of business?" or "I don't like the idea of my files on someone else's computers". However, based on my past performance, I concluded that any solution is better than my current one.
 
-The ideal situation was to have my entire home directory on[Dropbox](http://www.dropbox.com) . This is feasible only if you have about 50-100gbs you care about. For most people, including myself, this is not the case. So how do you reduce your total data footprint to 50gbs?
-- No more local mp3 storage. I went and uploaded my current mp3 collection (15 gbs or so) to[Amazon Cloud Player](http://www.amazon.com/b/?ie=UTF8&node=2658409011&tag=googhydr-20&hvadid=10051401225&ref=pd_sl_6fao23lz18_e) . I also deleted anything[rdio](http://www.rdio.com) already had in its collection. 
-- 
+The ideal situation was to have my entire home directory on [Dropbox](http://www.dropbox.com). This is feasible only if you have about 50-100gbs you care about. For most people, including myself, this is not the case. So how do you reduce your total data footprint to 50gbs?
 
-I deleted the random assortment of movies and tv shows I've acrued over the years, since 98% of them they are already on[Netflix](http://www.netflix.com) and[Hulu Plus](http://www.hulu.com/plus) .
-- 
+* No more local mp3 storage. I went and uploaded my current mp3 collection (15 gbs or so) to [Amazon Cloud Player](http://www.amazon.com/b/?ie=UTF8&node=2658409011&tag=googhydr-20&hvadid=10051401225&ref=pd_sl_6fao23lz18_e). I also deleted anything [rdio](http://www.rdio.com) already had in its collection.  
 
-Pictures were the last remaining swath of disk space. I wrote a script using the (awesome) [smugmug](http://www.smugmug.com) api, and uploaded all my photos to smugmug.
+* I deleted the random assortment of movies and tv shows I've acrued over the years, since 98% of them they are already on [Netflix](http://www.netflix.com) and [Hulu Plus](http://www.hulu.com/plus).
 
-
+* Pictures were the last remaining swath of disk space. I wrote a script using the (awesome) [smugmug](http://www.smugmug.com) api, and uploaded all my photos to smugmug.
 
 After these changes I'm going to put my entire home directory up on Dropbox, since it will fit now. Admittedly, all these services cost money, but it's a small price to pay for never having to worry about backups or the location of your files (since they can be accessed anywhere).
 
-Im curious as to how others have solved this problem or how Apple will solve it with their supposed "[iCloud](http://www.cbsnews.com/8301-501465_162-20067567-501465.html) ".
+Im curious as to how others have solved this problem or how Apple will solve it with their supposed "[iCloud](http://www.cbsnews.com/8301-501465_162-20067567-501465.html)".
 
 
 

@@ -69,4 +69,7 @@ var FocusMover = new Class({
 ```
 
 As you can see, the constructor takes two arguments: a selector (which should return a list of all your input fields), and the number of input field columns. So for a 4x2 table, you would set it up like this:
+
+```javascript
 var FM = new FocusMover('#mytable input', 4)
+```

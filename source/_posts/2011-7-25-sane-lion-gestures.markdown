@@ -7,8 +7,10 @@ permalink: /sane-lion-gestures
 categories:
 ---
 
- 
+
 
 Here's how you disable lion's dumb default gestures that break front/back on browsing and next/prev in emacs:
 
-![../../../image/2011/07/29570862-Screen_Shot_2011-07-25_at_1.30.30_PM.png] ![../../../image/2011/07/29570863-Screen_Shot_2011-07-25_at_1.30.47_PM.png] ![../../../image/2011/07/29570858-Screen_Shot_2011-07-25_at_1.30.20_PM.png] 
+![](/images/blog/sane1.png)
+![](/images/blog/sane2.png)
+![](/images/blog/sane3.png)
