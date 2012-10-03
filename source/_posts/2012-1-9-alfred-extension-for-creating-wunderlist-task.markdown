@@ -7,8 +7,7 @@ permalink: /alfred-extension-for-creating-wunderlist-task
 categories:
 ---
 
- ### Alfred Extension for creating Wunderlist tasks
-January  9 2012, 11:36 PM by Julio Capote
+ 
 
 While looking for a way to add wunderlist tasks via alfred, I came upon this: [http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred](http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred) 
 

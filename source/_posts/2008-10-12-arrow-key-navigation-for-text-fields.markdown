@@ -7,8 +7,7 @@ permalink: /post/54266325/arrow-key-navigation-for-text-fields
 categories:
 ---
 
- ### Arrow key navigation for text fields
-October 12 2008,  5:41 PM by Julio Capote
+ 
 
 Here is a class for enabling the use of arrow keys to navigate through a grid of input fields: (using mootools)
 var FocusMover = new Class({

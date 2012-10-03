@@ -7,8 +7,7 @@ permalink: /post/46737450/why-i-am-excited-about-jruby-rails
 categories:
 ---
 
- ### Why I am excited about JRuby/Rails
-August 20 2008,  1:21 PM by Julio Capote
+ 
 
 There are some new developments ripening on the JRuby/Rails front that’s going to make things awesome in the coming months:
 - Thread safe rails in 2.2, see[announcment](http://weblog.rubyonrails.org/2008/8/16/josh-peek-officially-joins-the-rails-core) and what it means[here](http://blog.headius.com/2008/08/qa-what-thread-safe-rails-means.html) 

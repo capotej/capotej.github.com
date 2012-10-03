@@ -7,5 +7,4 @@ permalink: /post/245405012/on-php-frameworks
 categories:
 ---
 
- ### On PHP Frameworks...
-November 15 2009,  4:16 PM by Julio Capote
+ 

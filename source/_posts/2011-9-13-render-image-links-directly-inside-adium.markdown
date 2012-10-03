@@ -7,8 +7,7 @@ permalink: /render-image-links-directly-inside-adium
 categories:
 ---
 
- ### Render image links directly inside Adium
-September 13 2011,  8:59 AM by Julio Capote
+ 
 
 Last night I delightfully discovered that Adium Message Styles are just html, css, and javascript rendered inside a webview. The next natural step was to write something in it, so I wrote a Message Style that tries to render any image link directly inline the conversation (campfire style).![../../../image/2011/09/31663815-x.png] 
 

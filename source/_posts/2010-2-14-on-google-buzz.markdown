@@ -7,8 +7,7 @@ permalink: /post/390050440/on-google-buzz
 categories:
 ---
 
- ### On Google Buzz
-February 14 2010,  6:31 PM by Julio Capote
+ 
 
 Summary: In this post I attempt to rationalize the creation of Google Buzz.
 

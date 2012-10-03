@@ -7,8 +7,7 @@ permalink: /post/52467447/why-mootools-or-why-not-jquery
 categories:
 ---
 
- ### Why MooTools (or Why not JQuery)
-September 30 2008, 10:26 AM by Julio Capote
+ 
 
 I’ve been toying around with MooTools a bit lately, and I’ve found the experience quite enjoyable and refreshing. Naturally, I[twittered](http://twitter.com/capotej/statuses/939831956) about it and went along my merry way. Moments later (and much to my surprise), I had a direct message from John Resig himself asking “Why, what’s wrong with jQuery?”. I was pretty taken aback that he would take time from his surely busy day to message a total stranger in an effort to improve his project or at least gain an insight in the everyday life of a js developer (it’s not like DHH would personally message people that are dumping rails to use merb). I figured he deserved a straight, honest answer; One that at least would be longer than[140 characters](http://twitter.com/capotej/statuses/940082809) (even though I managed to use every single one). So it begs the question, Why MooTools?
 1. Class support.JQuery’s SQL-like syntax is fine for quick and dirty javascripting, but eventually you’ll want real classes to structure your UI logic.

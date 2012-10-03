@@ -7,8 +7,7 @@ permalink: /blog/2008/08/13/yui3pr1
 categories:
 ---
 
- ### YUI 3 Preview Release
-August 13 2008,  9:39 PM by Julio Capote[http://yuiblog.com/blog/2008/08/13/yui3pr1/](http://yuiblog.com/blog/2008/08/13/yui3pr1/) 
+ [http://yuiblog.com/blog/2008/08/13/yui3pr1/](http://yuiblog.com/blog/2008/08/13/yui3pr1/) 
 
 
 

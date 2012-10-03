@@ -7,8 +7,7 @@ permalink: /finagle-with-scala-bootstrapper
 categories:
 ---
 
- ### Finagle with scala-bootstrapper
-January 25 2012,  9:45 AM by Julio Capote
+ 
 
 I've been fascinated by the concepts in[finagle](http://twitter.github.com/finagle/)  for some time, but being a scala noob, I never knew how to bootstrap a finagle project. Turns out twitter has a gem, [scala-bootstrapper](https://github.com/twitter/scala-bootstrapper) , that generates a simple thirft based key/value store for you. There's even a[tutorial](http://twitter.github.com/scala_school/searchbird.html)  on how to extend the example project into a distributed search service.
 

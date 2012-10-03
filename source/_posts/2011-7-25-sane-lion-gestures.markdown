@@ -7,8 +7,7 @@ permalink: /sane-lion-gestures
 categories:
 ---
 
- ### Sane Lion Gestures
-July 25 2011,  1:37 PM by Julio Capote
+ 
 
 Here's how you disable lion's dumb default gestures that break front/back on browsing and next/prev in emacs:
 

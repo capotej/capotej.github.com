@@ -7,8 +7,7 @@ permalink: /post/2546786852/what-i-released-in-2010
 categories:
 ---
 
- ### What I released in 2010
-December 31 2010,  1:29 PM by Julio Capote
+ 
 
 Here’s a recap of what I’ve worked on and released in 2010:
 

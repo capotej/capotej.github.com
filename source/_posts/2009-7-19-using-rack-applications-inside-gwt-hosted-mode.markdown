@@ -7,8 +7,7 @@ permalink: /post/145035194/using-rack-applications-inside-gwt-hosted-mode
 categories:
 ---
 
- ### Using Rack applications inside GWT Hosted mode
-July 19 2009,  6:51 PM by Julio Capote
+ 
 
 This guide will show you how you can use JRuby to run any Rack application inside Google Web Toolkit’s (GWT) hosted mode server so your interface and your backend are of the Same Origin.
 

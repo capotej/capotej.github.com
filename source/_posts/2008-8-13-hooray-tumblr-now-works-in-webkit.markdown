@@ -7,8 +7,7 @@ permalink: /post/45804962/hooray-tumblr-now-works-in-webkit
 categories:
 ---
 
- ### Hooray, tumblr now works in webkit
-August 13 2008,  6:14 AM by Julio Capote
+ 
 
 If you are having any issues using tumblr with webkit, make sure you are running the latest [nightly](http://nightly.webkit.org)  and everything should work fine.
 

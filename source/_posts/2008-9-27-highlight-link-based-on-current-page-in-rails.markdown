@@ -7,8 +7,7 @@ permalink: /post/52081481/highlight-link-based-on-current-page-in-rails
 categories:
 ---
 
- ### Highlight link based on current page in rails
-September 27 2008,  7:47 PM by Julio Capote
+ 
 
 This is common pattern in website navigation, where it highlights the link (usually by setting class=”active”) that took you to the current page while you are on that page.
 

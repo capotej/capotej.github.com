@@ -7,8 +7,7 @@ permalink: /post/67873462/useful-rails-routing-tips
 categories:
 ---
 
- ### Useful Rails Routing tips
-January  1 2009,  3:50 PM by Julio Capote
+ 
 
 Even though I have been using Rails for fun and profit for about 2 years now, I felt I never really used it’s routing engine to its full potential. So I checked out new[Rails Routing from the outside in](http://guides.rubyonrails.org/routing_outside_in.html) guide and discovered bunch of useful tricks that I (and maybe you) had no idea you could do. Here they are:### Multiple resource definitions on a single line
 

@@ -7,8 +7,7 @@ permalink: /post/56866975/so-you-want-to-click-that-button
 categories:
 ---
 
- ### So you want to click that button?
-October 28 2008,  9:05 PM by Julio Capote
+ 
 
 I stumbled upon[http://clickthatbutton.com](http://clickthatbutton.com) during my routine lurking of[hacker news](http://news.ycombinator.com) . After being amused for about 10 seconds,  I decided to take it to the next level; I wanted to click on it really, really fast. After going through a few solutions (simple js while loop in firebug, then curl/wget) and failing, the idea of using selenium popped into my head. So I went off to their[site](http://selenium-ide.openqa.org/download.jsp) and installed the extension. I figured a simple recording of the mouse event, then wrapping it around a loop in selenium would do the trick, but I quickly found that selenium doesn’t support loops. Not to be stopped, I searched google and ended up with[this](http://51elliot.blogspot.com/2008/02/selenium-ide-goto.html) . After installing the plugin for selenium (a plugin for a plugin!?) and restarting firefox, I tried it again and to my surprise it worked! The click counter was going up steadily on its own (18k clicks and counting). Here is my selenium test case for those of you following along:
 <?xml version="1.0" encoding="UTF-8"?>

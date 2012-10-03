@@ -7,8 +7,7 @@ permalink: /post/2583891119/migrationfor-write-migrations-right-from-the-command
 categories:
 ---
 
- ### MigrationFor: Write migrations right from the command line!
-January  3 2011,  9:48 AM by Julio Capote
+ 
 
 As someone who mostly stays in the rails console, I’ve always hated forgetting a field, creating a migration, finding it among your other 500 migration files, then adding the one line you need to add, then running it. This is probably the most annoying part of the Rails experience. I’ve always wanted to write a better migration generator that could take a list of commands/fields and write the migration for you, since most of the time what you name a migration has all the info it needs (add_index_to_post_id). Thanks to the heavily refactored plugin/generator API in Rails 3, I was able to do just that.
 

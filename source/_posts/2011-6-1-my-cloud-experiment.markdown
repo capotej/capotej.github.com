@@ -7,8 +7,7 @@ permalink: /my-cloud-experiment
 categories:
 ---
 
- ### My cloud experiment
-June  1 2011, 10:18 AM by Julio Capote
+ 
 
 Lately I've been thinking about the best way to store and backup large amounts of personal data. It irked me that I've never been able to keep a collection of photos past 2-3 years. Either it's a machine swap or a misplaced backup, something always happens. 
 
