@@ -1,0 +1,159 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Tabbing through fields vertically - @capotej</title>
+	<meta name="author" content="Julio Capote">
+
+	
+	<meta name="description" content="Sometimes it’s useful to switch the browser’s default tabbing behavior (left to right) to the opposite (top to bottom) when your input fields are in &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="@capotej" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">@capotej</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:capotej.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/capotej" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/capotej" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+
+    <a class="pinboard" href="https://pinboard.com/u:capotej" title="Pinboard">Pinboard</a>
+
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:capotej.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Tabbing Through Fields Vertically</h1>
+	<div class="entry-content"><p>Sometimes it’s useful to switch the browser’s default tabbing behavior (left to right) to the opposite (top to bottom) when your input fields are in a grid layout instead the of the usual single column layout. Having to do this manually is a real pain, especially for large grids; So here is a solution in javascript, using mootools:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">addEvent</span><span class="p">(</span><span class="s1">&#39;domready&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">trs</span> <span class="o">=</span> <span class="nx">$$</span><span class="p">(</span><span class="s1">&#39;#mytable tr&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">accum</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="nx">trs</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">tr</span><span class="p">,</span> <span class="nx">trindex</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">accum</span> <span class="o">=</span> <span class="nx">trindex</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="nx">tr</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">().</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">td</span><span class="p">,</span> <span class="nx">tdindex</span><span class="p">){</span>
+</span><span class='line'>            <span class="nx">td</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">tabIndex</span> <span class="o">=</span> <span class="nx">accum</span>
+</span><span class='line'>            <span class="nx">accum</span> <span class="o">=</span> <span class="nx">accum</span> <span class="o">+</span> <span class="nx">trs</span><span class="p">.</span><span class="nx">length</span>
+</span><span class='line'>        <span class="p">})</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-10-11T01:54:00-07:00" pubdate data-updated="true">Oct 11<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Julio Capote
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>

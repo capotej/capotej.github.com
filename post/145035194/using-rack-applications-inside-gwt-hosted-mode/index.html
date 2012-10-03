@@ -1,0 +1,292 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Using Rack applications inside GWT Hosted mode - @capotej</title>
+	<meta name="author" content="Julio Capote">
+
+	
+	<meta name="description" content="This guide will show you how you can use JRuby to run any Rack application inside Google Web Toolkit’s (GWT) hosted mode server so your interface and &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="@capotej" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">@capotej</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:capotej.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/capotej" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/capotej" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+
+    <a class="pinboard" href="https://pinboard.com/u:capotej" title="Pinboard">Pinboard</a>
+
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:capotej.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Using Rack Applications Inside GWT Hosted Mode</h1>
+	<div class="entry-content"><p>This guide will show you how you can use JRuby to run any Rack application inside Google Web Toolkit’s (GWT) hosted mode server so your interface and your backend are of the Same Origin.</p>
+
+<p>BackgroundGWT has two ways of interacting with a server: GWT Remote Procedure Call (RPC) and plain HTTP (XHR). GWT-RPC is a high level library designed for interacting with server-side Java code. GWT-RPC implements the GWT Remote Service interface allowing you to call those methods from the user interface. Essentially, GWT handles the dirty work for you. However, it only works on Java backends that can implement that interface. Since most of my backends are Sinatra/Rack applications, I’ll be using the plain HTTP library.</p>
+
+<p>The problemDue to the restriction of the <a href="http://en.wikipedia.org/wiki/Same_origin_policy">Same Origin</a> policy, the interface served out of GWT’s development, or Hosted Mode server can only make requests back to itself. If you were using real servlets or GWT’s RemoteService this wouldn’t be an issue; but since Rack applications listen on their own port, you cannot make requests from GWT to our application without resorting to something like JSONP or server-side proxying. This leaves you having to compile our interface to HTML/JS/CSS, which is lengthy process, and serve it from the origin of the Rack application to see our changes.</p>
+
+<p>The solutionSince I wanted to develop using GWT’s development environment with a Rack backend, I devised a way to use jruby-rack to load arbitrary Rack applications alongside our interface.</p>
+
+<p>First let’s setup our environment:</p>
+
+<h3>Download and unpack the latest GWT for your platform (mine’s being linux)</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>wget http://google-web-toolkit.googlecode.com/files/gwt-linux-1.7.0.tar.bz2
+</span><span class='line'>tar -xvjpf gwt-linux-1.7.0.tar.bz2cd gwt-linux-1.7.0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Download the latest jruby-complete.jar</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>wget http://repository.codehaus.org/org/jruby/jruby-complete/1.3.1/jruby-complete-1.3.1.jar
+</span><span class='line'>mv jruby-complete-1.3.1.jar jruby-complete.jar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Download the latest jruby-rack.jar</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>wget http://repository.codehaus.org/org/jruby/rack/jruby-rack/0.9.4/jruby-rack-0.9.4.jar
+</span><span class='line'>mv jruby-rack-0.9.4.jar jruby-rack.jar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Create an app with webAppCreator</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>./webAppCreator -out MySinatra com.example.MySinatra
+</span><span class='line'><span class="nb">cd </span>MySinatra
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Package gem dependencies</h3>
+
+<p>In order for this to work you have to package any gem dependencies your backend needs (sinatra, in our case) as jars within your application. For Sinatra it looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>java -jar jruby-complete.jar -S gem install -i ./sinatra sinatra --no-rdoc --no-ri
+</span><span class='line'>jar cf sinatra.jar -C sinatra .
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Add jruby-complete.jar, jruby-rack.jar, sinatra.jar (and any other jars you’ve created) to the libs target of your build.xml</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;target</span> <span class="na">name=</span><span class="s">&quot;libs&quot;</span> <span class="na">description=</span><span class="s">&quot;Copy libs to WEB-INF/lib&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;mkdir</span> <span class="na">dir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;copy</span> <span class="na">todir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="na">file=</span><span class="s">&quot;${gwt.sdk}/gwt-servlet.jar&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!-- Add any additional server libs that need to be copied --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;copy</span> <span class="na">todir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="na">file=</span><span class="s">&quot;${gwt.sdk}/jruby-complete.jar&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;copy</span> <span class="na">todir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="na">file=</span><span class="s">&quot;${gwt.sdk}/jruby-rack.jar&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;copy</span> <span class="na">todir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="na">file=</span><span class="s">&quot;${gwt.sdk}/sinatra.jar&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/target&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Add these lines right after <web-app> in war/WEB-INF/web.xml</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;context-param&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;param-name&gt;</span>rackup<span class="nt">&lt;/param-name&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;param-value&gt;</span>
+</span><span class='line'>    require &#39;rubygems&#39;
+</span><span class='line'>    require &#39;./lib/sinatra_app&#39;
+</span><span class='line'>    map &#39;/api&#39; do
+</span><span class='line'>      run MyApp 
+</span><span class='line'>    end
+</span><span class='line'>  <span class="nt">&lt;/param-value&gt;</span>
+</span><span class='line'><span class="nt">&lt;/context-param&gt;</span>
+</span><span class='line'><span class="nt">&lt;filter&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;filter-name&gt;</span>RackFilter<span class="nt">&lt;/filter-name&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;filter-class&gt;</span>org.jruby.rack.RackFilter<span class="nt">&lt;/filter-class&gt;</span>
+</span><span class='line'><span class="nt">&lt;/filter&gt;</span>
+</span><span class='line'><span class="nt">&lt;filter-mapping&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;filter-name&gt;</span>RackFilter<span class="nt">&lt;/filter-name&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;url-pattern&gt;</span>/api/*<span class="nt">&lt;/url-pattern&gt;</span>
+</span><span class='line'><span class="nt">&lt;/filter-mapping&gt;</span>
+</span><span class='line'><span class="nt">&lt;listener&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;listener-class&gt;</span>org.jruby.rack.RackServletContextListener<span class="nt">&lt;/listener-class&gt;</span>
+</span><span class='line'><span class="nt">&lt;/listener&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: All you’re doing here is passing the contents of a config.ru file into the <code>&lt;param-value&gt;</code> element for the <code>&lt;context-param&gt;</code> (make sure this is HTML encoded!). This states that any request to /api is to be handled by your Sinatra application and not GWT’s Hosted mode servlet.</p>
+
+<h3>Create your Sinatra backend and place it in war/WEB-INF/lib/sinatra_app.rb</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">MyApp</span> <span class="o">&lt;</span> <span class="no">Sinatra</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/showpage&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;http://www.yahoo.com&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/helloworld&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="s1">&#39;hello world&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Run your new awesome setup</h3>
+
+<p><code>ant hosted</code></p>
+
+<p>Now when navigate to <a href="http://localhost:8888/api/helloworld">http://localhost:8888/api/helloworld</a> or <a href="http://localhost:8888/api/showpage">http://localhost:8888/api/showpage</a> you should see the Sinatra application being served via GWT.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-19T18:51:00-07:00" pubdate data-updated="true">Jul 19<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Julio Capote
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>

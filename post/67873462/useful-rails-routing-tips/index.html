@@ -1,0 +1,204 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Useful Rails Routing tips - @capotej</title>
+	<meta name="author" content="Julio Capote">
+
+	
+	<meta name="description" content="Even though I have been using Rails for fun and profit for about 2 years now, I felt I never really used it’s routing engine to its full potential. &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="@capotej" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">@capotej</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:capotej.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/capotej" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/capotej" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+
+    <a class="pinboard" href="https://pinboard.com/u:capotej" title="Pinboard">Pinboard</a>
+
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:capotej.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Useful Rails Routing Tips</h1>
+	<div class="entry-content"><p>Even though I have been using Rails for fun and profit for about 2 years now, I felt I never really used it’s routing engine to its full potential. So I checked out new <a href="http://guides.rubyonrails.org/routing_outside_in.html">Rails Routing from the outside in</a> guide and discovered bunch of useful tricks that I (and maybe you) had no idea you could do. Here they are:</p>
+
+<h3>Multiple resource definitions on a single line</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">:videos</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Impose a certain format for resource identifiers</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:requirements</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="sr">/[A-Z][A-Z][0-9]+/</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This way, <code>/photos/3</code> would not work, but <code>/photos/DA321</code> would.</p>
+
+<h3>Friendlier action names</h3>
+
+<p>Say for your application ‘create’ and ‘change’ make more sense than the default ‘new’ and ‘edit’ you can do</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:path_names</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:new</span> <span class="o">=&gt;</span> <span class="s1">&#39;make&#39;</span><span class="p">,</span> <span class="ss">:edit</span> <span class="o">=&gt;</span> <span class="s1">&#39;change&#39;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also do this site-wide also, in your environment.rb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">action_controller</span><span class="o">.</span><span class="n">resources_path_names</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">:new</span> <span class="o">=&gt;</span> <span class="s1">&#39;make&#39;</span><span class="p">,</span> <span class="ss">:edit</span> <span class="o">=&gt;</span> <span class="s1">&#39;change&#39;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Trim the fat off resources with :only and :except</h3>
+
+<p>When you use map.resources, rails generates 7 restful routes for that resource; But what if that resource only needed to be seen and listed, never edited or created?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:only</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:index</span><span class="p">,</span> <span class="ss">:show</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If your application uses a lot of <code>map.resources</code> calls but not neccesarily all its generated routes, you can save memory this way.</p>
+
+<h3>Adding extra routes to your resources</h3>
+
+<p>Instead of fighting the <code>map.resources</code> generator by placing a horror like this atop your routes.rb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">connect</span> <span class="s1">&#39;/photos/:id/preview&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s1">&#39;preview&#39;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can do this to your already mapped resource</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:member</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:preview</span> <span class="o">=&gt;</span> <span class="ss">:get</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will map all GET’s to <code>/photos/3</code> to the preview action of your photos controller</p>
+
+<p>This can also be  used in collections instead of singular members, just change <code>:member</code> to <code>:collection</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:collection</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:search</span> <span class="o">=&gt;</span> <span class="ss">:get</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will give you <code>/photos/search</code> and hit the search action within the photos controller</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-01-01T15:50:00-08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2009</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Julio Capote
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Alfred Extension for creating Wunderlist tasks - @capotej</title>
+	<meta name="author" content="Julio Capote">
+
+	
+	<meta name="description" content="While looking for a way to add wunderlist tasks via alfred, I came upon wunderlist-for-alfred Looked cool, but I wanted to write my own that didn&# &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="@capotej" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">@capotej</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:capotej.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/capotej" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/capotej" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+
+    <a class="pinboard" href="https://pinboard.com/u:capotej" title="Pinboard">Pinboard</a>
+
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:capotej.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Alfred Extension for Creating Wunderlist Tasks</h1>
+	<div class="entry-content"><p>While looking for a way to add wunderlist tasks via alfred, I came upon <a href="http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred">wunderlist-for-alfred</a></p>
+
+<p>Looked cool, but I wanted to write my own that didn&#8217;t depend on php.</p>
+
+<p>I used <code>lsof</code> to figure out the location of the db, then used <code>file</code> to see what kind of db it was. Luckily, it was sqlite3, so I was able to poke around and figure out the sql to create a task.</p>
+
+<p>Here&#8217;s the alfred extenstion that ties it all together:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">user</span><span class="o">=</span><span class="sb">`</span>whoami<span class="sb">`</span>
+</span><span class='line'><span class="nv">wunderdb</span><span class="o">=</span><span class="s2">&quot;/Users/$user/Library/Wunderlist/wunderlist.db&quot;</span>
+</span><span class='line'>sqlite3 <span class="nv">$wunderdb</span> <span class="s2">&quot;insert into tasks (name, list_id) values (&#39;{query}&#39;, 1)&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Download it <a href="http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension">here</a></p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-09T23:36:00-08:00" pubdate data-updated="true">Jan 9<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Julio Capote
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>

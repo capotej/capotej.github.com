@@ -1,0 +1,158 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Highlight link based on current page in rails - @capotej</title>
+	<meta name="author" content="Julio Capote">
+
+	
+	<meta name="description" content="This is common pattern in website navigation, where it highlights the link (usually by setting class=”active”) that took you to the current page &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="@capotej" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">@capotej</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:capotej.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/capotej" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/capotej" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+
+    <a class="pinboard" href="https://pinboard.com/u:capotej" title="Pinboard">Pinboard</a>
+
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:capotej.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Highlight Link Based on Current Page in Rails</h1>
+	<div class="entry-content"><p>This is common pattern in website navigation, where it highlights the link (usually by setting <code>class=”active”</code>) that took you to the current page while you are on that page.</p>
+
+<p>First, define a helper:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">is_active?</span><span class="p">(</span><span class="n">page_name</span><span class="p">)</span>
+</span><span class='line'>  <span class="s2">&quot;active&quot;</span> <span class="k">if</span> <span class="n">params</span><span class="o">[</span><span class="ss">:action</span><span class="o">]</span> <span class="o">==</span> <span class="n">page_name</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then call it in your link_to’s in your layout as such:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">link_to</span> <span class="s1">&#39;Home&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="n">is_active?</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">link_to</span> <span class="s1">&#39;About&#39;</span><span class="p">,</span> <span class="s1">&#39;/about&#39;</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="n">is_active?</span><span class="p">(</span><span class="s2">&quot;about&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">link_to</span> <span class="s1">&#39;contact&#39;</span><span class="p">,</span> <span class="s1">&#39;/contact&#39;</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="n">is_active?</span><span class="p">(</span><span class="s2">&quot;contact&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This effect is achieved due to how link_to handles being passed <code>nil</code> for its <code>:class</code>, so when <code>is_active?</code> returns <code>nil</code> (because its not the current page), <code>link_to</code> outputs nothing as its class (not <code>class=””</code> as you might expect).</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-09-27T19:47:00-07:00" pubdate data-updated="true">Sep 27<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Julio Capote
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>

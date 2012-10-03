@@ -4,37 +4,999 @@
   <title><![CDATA[@capotej]]></title>
   <link href="http://capotej.com/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-09-30T21:53:26-07:00</updated>
+  <updated>2012-10-02T23:41:47-07:00</updated>
   <id>http://capotej.com/</id>
   <author>
-    <name><![CDATA[julio Capote]]></name>
+    <name><![CDATA[Julio Capote]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
-    <title type="html"><![CDATA[testing out octopress]]></title>
-    <link href="http://capotej.com/blog/2012/09/30/testing-out-octopress/"/>
-    <updated>2012-09-30T21:18:00-07:00</updated>
-    <id>http://capotej.com/blog/2012/09/30/testing-out-octopress</id>
-    <content type="html"><![CDATA[<p>Blah blah, some code</p>
+    <title type="html"><![CDATA[Finagle with scala-bootstrapper]]></title>
+    <link href="http://capotej.com/finagle-with-scala-bootstrapper"/>
+    <updated>2012-01-25T09:45:00-08:00</updated>
+    <id>http://capotej.com/finagle-with-scala-bootstrapper</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve been fascinated by the concepts in <a href="http://twitter.github.com/finagle/">finagle</a> for some time, but being a scala noob, I never knew how to bootstrap a finagle project. Turns out twitter has a gem, <a href="https://github.com/twitter/scala-bootstrapper">scala-bootstrapper</a>, that generates a simple thirft based key/value store for you. There&#8217;s even a<a href="http://twitter.github.com/scala_school/searchbird.html">tutorial</a>  on how to extend the example project into a distributed search service.</p>
 
-<figure class='code'><figcaption><span>thing </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p>This is a guide on setting it all up locally, it assumes you have Git, Homebrew, and OS X.</p>
+
+<h3>Install scala 2.8.1</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">response</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">DefaultHttpResponse</span><span class="o">(</span><span class="nc">HTTP_1_1</span><span class="o">,</span> <span class="nc">OK</span><span class="o">)</span>
-</span><span class='line'><span class="k">val</span> <span class="n">mtype</span> <span class="k">=</span> <span class="n">exts</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="n">toString</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="sc">&#39;.&#39;</span><span class="o">).</span><span class="n">last</span><span class="o">).</span><span class="n">getOrElse</span><span class="o">(</span><span class="s">&quot;application/octet-stream&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">setStatus</span><span class="o">(</span><span class="nc">OK</span><span class="o">)</span>
-</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">setHeader</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">mtype</span><span class="o">)</span>
-</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">setContent</span><span class="o">(</span><span class="n">copiedBuffer</span><span class="o">(</span><span class="n">b</span><span class="o">))</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>brew versions scala
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span>/usr/local/<span class="o">(</span>or wherever you have homebrew installed<span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>git checkout -b scala281 0e16b9d<span class="o">(</span>make sure the SHA matches versions output<span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>brew install scala
+</span><span class='line'><span class="nv">$ </span>git checkout master<span class="nv">$git</span> branch -D scala281
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h3>Install sbt 0.7.4 (assumes you have a ~/bin in your $PATH)</h3>
 
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl -O http://simple-build-tool.googlecode.com/files/sbt-launch-0.7.4.jar &gt; ~/bin/sbt-launch.jar
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;java -Xmx1G -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;&#39;</span>&gt; ~/bin/sbt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install scala-bootstrapper</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gem install scala-bootstrapper
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Generate finagle project**</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>mkdir newbird
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>newbird
+</span><span class='line'><span class="nv">$ </span>scala-bootstrapper newbird
+</span><span class='line'><span class="nv">$ </span>sbt update
+</span><span class='line'><span class="nv">$ </span>sbt <span class="nb">test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Add a Client class</h3>
+
+<p>create newbird/src/main/scala/com/twitter/newbird/Client.scala with</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">package</span> <span class="nn">com.twitter.newbird</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">import</span> <span class="nn">com.twitter.finagle.builder.ClientBuilder</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">com.twitter.finagle.thrift.ThriftClientFramedCodec</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">com.twitter.newbird.thrift._</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">org.apache.thrift.protocol.TBinaryProtocol</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">import</span> <span class="nn">java.net.InetSocketAddress</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Client</span> <span class="o">{</span><span class="err">  </span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">val</span> <span class="n">service</span> <span class="k">=</span> <span class="nc">ClientBuilder</span><span class="o">().</span><span class="n">hosts</span><span class="o">(</span><span class="nc">Seq</span><span class="o">(</span><span class="n">newInetSocketAddress</span><span class="o">(</span><span class="s">&quot;localhost&quot;</span><span class="o">,</span><span class="mi">9999</span><span class="o">)))</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">codec</span><span class="o">(</span><span class="nc">ThriftClientFramedCodec</span><span class="o">())</span><span class="err">    </span>
+</span><span class='line'>    <span class="o">.</span><span class="n">hostConnectionLimit</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span><span class="err">    </span>
+</span><span class='line'>    <span class="o">.</span><span class="n">build</span><span class="o">()</span><span class="err">  </span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">client</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">NewbirdServiceClientAdapter</span><span class="o">(</span>
+</span><span class='line'>    <span class="k">new</span> <span class="n">thrift</span><span class="o">.</span><span class="nc">NewbirdService</span><span class="o">.</span><span class="nc">ServiceToClient</span><span class="o">(</span><span class="n">service</span><span class="o">,</span><span class="n">newTBinaryProtocol</span><span class="o">.</span><span class="nc">Factory</span><span class="o">))</span><span class="err">  </span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="n">get</span><span class="o">(</span><span class="n">key</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="n">key</span><span class="o">)()</span><span class="err">  </span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">put</span><span class="o">(</span><span class="n">key</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span> <span class="n">value</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="n">client</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">)()</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Running the server</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>newbird
+</span><span class='line'><span class="nv">$ </span>sbt&gt; run -f config/development.scala
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Playing with the client**</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>newbird
+</span><span class='line'><span class="nv">$ </span>sbt console
+</span><span class='line'>scala&gt; import com.twitter.newbird.Client
+</span><span class='line'>scala&gt; val <span class="nv">client</span> <span class="o">=</span> new Client<span class="o">()</span>
+</span><span class='line'>scala&gt; client.put<span class="o">(</span><span class="s2">&quot;foo&quot;</span>,<span class="s2">&quot;bar&quot;</span><span class="o">)</span>
+</span><span class='line'>scala&gt; client.get<span class="o">(</span><span class="s2">&quot;foo&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Bonus</h3>
+
+<p>finagle exports a stats url you can curl:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl http://localhost:9900/stats.txt
+</span><span class='line'>counters:  Newbird/connects: 1  
+</span><span class='line'>Newbird/requests: 4  
+</span><span class='line'>Newbird/success: 4
+</span><span class='line'>gauges:  
+</span><span class='line'>  Newbird/connections: 0  
+</span><span class='line'>  Newbird/pending: 0  
+</span><span class='line'>  jvm_heap_committed: 588251136  
+</span><span class='line'>  jvm_heap_max: 2146828288  
+</span><span class='line'>  jvm_heap_used: 64354560  
+</span><span class='line'>  jvm_nonheap_committed: 83267584  
+</span><span class='line'>  jvm_nonheap_max: 318767104  
+</span><span class='line'>  jvm_nonheap_used: 68655360  
+</span><span class='line'>  jvm_num_cpus: 4  
+</span><span class='line'>  jvm_start_time: 1327511164928  
+</span><span class='line'>  jvm_thread_count: 14  
+</span><span class='line'>  jvm_thread_daemon_count: 9  
+</span><span class='line'>  jvm_thread_peak_count: 14  
+</span><span class='line'>  jvm_uptime: 2626505
+</span><span class='line'>labels:
+</span><span class='line'>  metrics:  
+</span><span class='line'>    Newbird/connection_duration: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>2590412, <span class="nv">count</span><span class="o">=</span>1, <span class="nv">maximum</span><span class="o">=</span>2590412, <span class="nv">minimum</span><span class="o">=</span>2590412, <span class="nv">p25</span><span class="o">=</span>2590412, <span class="nv">p50</span><span class="o">=</span>2590412, <span class="nv">p75</span><span class="o">=</span>2590412, <span class="nv">p90</span><span class="o">=</span>2590412, <span class="nv">p99</span><span class="o">=</span>2590412, <span class="nv">p999</span><span class="o">=</span>2590412, <span class="nv">p9999</span><span class="o">=</span>2590412<span class="o">)</span>  
+</span><span class='line'>    Newbird/connection_received_bytes: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>192, <span class="nv">count</span><span class="o">=</span>1, <span class="nv">maximum</span><span class="o">=</span>192, <span class="nv">minimum</span><span class="o">=</span>192, <span class="nv">p25</span><span class="o">=</span>192, <span class="nv">p50</span><span class="o">=</span>192, <span class="nv">p75</span><span class="o">=</span>192, <span class="nv">p90</span><span class="o">=</span>192, <span class="nv">p99</span><span class="o">=</span>192, <span class="nv">p999</span><span class="o">=</span>192, <span class="nv">p9999</span><span class="o">=</span>192<span class="o">)</span>  
+</span><span class='line'>    Newbird/connection_requests: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>4, <span class="nv">count</span><span class="o">=</span>1, <span class="nv">maximum</span><span class="o">=</span>4, <span class="nv">minimum</span><span class="o">=</span>4, <span class="nv">p25</span><span class="o">=</span>4, <span class="nv">p50</span><span class="o">=</span>4, <span class="nv">p75</span><span class="o">=</span>4, <span class="nv">p90</span><span class="o">=</span>4, <span class="nv">p99</span><span class="o">=</span>4, <span class="nv">p999</span><span class="o">=</span>4, <span class="nv">p9999</span><span class="o">=</span>4<span class="o">)</span>  
+</span><span class='line'>    Newbird/connection_sent_bytes: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>120, <span class="nv">count</span><span class="o">=</span>1, <span class="nv">maximum</span><span class="o">=</span>120, <span class="nv">minimum</span><span class="o">=</span>120, <span class="nv">p25</span><span class="o">=</span>120, <span class="nv">p50</span><span class="o">=</span>120, <span class="nv">p75</span><span class="o">=</span>120, <span class="nv">p90</span><span class="o">=</span>120, <span class="nv">p99</span><span class="o">=</span>120, <span class="nv">p999</span><span class="o">=</span>120, <span class="nv">p9999</span><span class="o">=</span>120<span class="o">)</span>  
+</span><span class='line'>    Newbird/request_latency_ms: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>14, <span class="nv">count</span><span class="o">=</span>4, <span class="nv">maximum</span><span class="o">=</span>39, <span class="nv">minimum</span><span class="o">=</span>2, <span class="nv">p25</span><span class="o">=</span>2, <span class="nv">p50</span><span class="o">=</span>8, <span class="nv">p75</span><span class="o">=</span>10, <span class="nv">p90</span><span class="o">=</span>39, <span class="nv">p99</span><span class="o">=</span>39, <span class="nv">p999</span><span class="o">=</span>39, <span class="nv">p9999</span><span class="o">=</span>39<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> </p>
+
+<p> </p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Alfred Extension for creating Wunderlist tasks]]></title>
+    <link href="http://capotej.com/alfred-extension-for-creating-wunderlist-task"/>
+    <updated>2012-01-09T23:36:00-08:00</updated>
+    <id>http://capotej.com/alfred-extension-for-creating-wunderlist-task</id>
+    <content type="html"><![CDATA[<p>While looking for a way to add wunderlist tasks via alfred, I came upon <a href="http://jdfwarrior.tumblr.com/post/13163220116/wunderlist-for-alfred">wunderlist-for-alfred</a></p>
+
+<p>Looked cool, but I wanted to write my own that didn&#8217;t depend on php.</p>
+
+<p>I used <code>lsof</code> to figure out the location of the db, then used <code>file</code> to see what kind of db it was. Luckily, it was sqlite3, so I was able to poke around and figure out the sql to create a task.</p>
+
+<p>Here&#8217;s the alfred extenstion that ties it all together:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">user</span><span class="o">=</span><span class="sb">`</span>whoami<span class="sb">`</span>
+</span><span class='line'><span class="nv">wunderdb</span><span class="o">=</span><span class="s2">&quot;/Users/$user/Library/Wunderlist/wunderlist.db&quot;</span>
+</span><span class='line'>sqlite3 <span class="nv">$wunderdb</span> <span class="s2">&quot;insert into tasks (name, list_id) values (&#39;{query}&#39;, 1)&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Download it <a href="http://dl.dropbox.com/u/42561/wunderlist-capotej.alfredextension">here</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Render image links directly inside Adium]]></title>
+    <link href="http://capotej.com/render-image-links-directly-inside-adium"/>
+    <updated>2011-09-13T08:59:00-07:00</updated>
+    <id>http://capotej.com/render-image-links-directly-inside-adium</id>
+    <content type="html"><![CDATA[<p>Last night I delightfully discovered that Adium Message Styles are just html, css, and javascript rendered inside a webview. The next natural step was to write something in it, so I wrote a Message Style that tries to render any image link directly inline the conversation (campfire style).</p>
+
+<p><img src="http://capotej.com/images/blog/adium1.png" alt="" /></p>
+
+<p>The code was written at midnight after a long day, so its not best. Basically, it&#8217;s a setInterval that runs every 2.5 seconds that loops through all message elements, appending an img tag to the body of the message if an image link is detected. It also removes the processing class as to not reprocess the same messages.</p>
+
+<p>Installation is simple, just download: </p>
+
+<p><a href="http://dl.dropbox.com/u/42561/Stockholm.AdiumMessageStyle.zip">http://dl.dropbox.com/u/42561/Stockholm.AdiumMessageStyle.zip</a></p>
+
+<p>and extract into ~/Library/Adium 2.0/Message Styles (create if necessary). Then choose the TOP Stockholm theme (no idea why there are two entries), and close your chat window. It should be activated next time a chat window opens.</p>
+
+<p><img src="http://capotej.com/images/blog/adium2.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Don't pee in the pool]]></title>
+    <link href="http://capotej.com/dont-pee-in-the-pool"/>
+    <updated>2011-08-18T20:14:00-07:00</updated>
+    <id>http://capotej.com/dont-pee-in-the-pool</id>
+    <content type="html"><![CDATA[<p>A rich man builds a pool containing only bottled water and invites a few friends over. He gathers everyone around and says, &#8220;Guys, I know it&#8217;s tempting and convenient to pee in the pool, but this pool is 100% Evian, let&#8217;s all try to use the bathroom next to the pool instead.&#8221; So everyone listens and enjoys a urine-free, delicious pool for the rest of the day. Until, of course, one of them breaks the rule, ruining it for everyone.</p>
+
+<p>That pool is your commit history and the merge commits are the pee in the pool. So please, keep your pee out of the pool and rebase instead.</p>
+
+<p>Disclaimer: I don&#8217;t really care if you do or do not pee in regular pools. This is all made up to illustrate a point.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sane Lion Gestures]]></title>
+    <link href="http://capotej.com/sane-lion-gestures"/>
+    <updated>2011-07-25T13:37:00-07:00</updated>
+    <id>http://capotej.com/sane-lion-gestures</id>
+    <content type="html"><![CDATA[<p>Here&#8217;s how you disable lion&#8217;s dumb default gestures that break front/back on browsing and next/prev in emacs:</p>
+
+<p><img src="http://capotej.com/images/blog/sane1.png" alt="" />
+<img src="http://capotej.com/images/blog/sane2.png" alt="" />
+<img src="http://capotej.com/images/blog/sane3.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[My cloud experiment]]></title>
+    <link href="http://capotej.com/my-cloud-experiment"/>
+    <updated>2011-06-01T10:18:00-07:00</updated>
+    <id>http://capotej.com/my-cloud-experiment</id>
+    <content type="html"><![CDATA[<p>Lately I&#8217;ve been thinking about the best way to store and backup large amounts of personal data. It irked me that I&#8217;ve never been able to keep a collection of photos past 2-3 years. Either it&#8217;s a machine swap or a misplaced backup, something always happens. </p>
+
+<p>When the idea of storing or backing up everything offsite comes up, people usually throw out objections like &#8220;What if they lose all my stuff or go out of business?&#8221; or &#8220;I don&#8217;t like the idea of my files on someone else&#8217;s computers&#8221;. However, based on my past performance, I concluded that any solution is better than my current one.</p>
+
+<p>The ideal situation was to have my entire home directory on <a href="http://www.dropbox.com">Dropbox</a>. This is feasible only if you have about 50-100gbs you care about. For most people, including myself, this is not the case. So how do you reduce your total data footprint to 50gbs?</p>
+
+<ul>
+<li><p>No more local mp3 storage. I went and uploaded my current mp3 collection (15 gbs or so) to <a href="http://www.amazon.com/b/?ie=UTF8&amp;node=2658409011&amp;tag=googhydr-20&amp;hvadid=10051401225&amp;ref=pd_sl_6fao23lz18_e">Amazon Cloud Player</a>. I also deleted anything <a href="http://www.rdio.com">rdio</a> already had in its collection. </p></li>
+<li><p>I deleted the random assortment of movies and tv shows I&#8217;ve acrued over the years, since 98% of them they are already on <a href="http://www.netflix.com">Netflix</a> and <a href="http://www.hulu.com/plus">Hulu Plus</a>.</p></li>
+<li><p>Pictures were the last remaining swath of disk space. I wrote a script using the (awesome) <a href="http://www.smugmug.com">smugmug</a> api, and uploaded all my photos to smugmug.</p></li>
+</ul>
+
+
+<p>After these changes I&#8217;m going to put my entire home directory up on Dropbox, since it will fit now. Admittedly, all these services cost money, but it&#8217;s a small price to pay for never having to worry about backups or the location of your files (since they can be accessed anywhere).</p>
+
+<p>Im curious as to how others have solved this problem or how Apple will solve it with their supposed &#8221;<a href="http://www.cbsnews.com/8301-501465_162-20067567-501465.html">iCloud</a>&#8221;.</p>
+
+<p> </p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MigrationFor: Write migrations right from the command line!]]></title>
+    <link href="http://capotej.com/post/2583891119/migrationfor-write-migrations-right-from-the-command"/>
+    <updated>2011-01-03T09:48:00-08:00</updated>
+    <id>http://capotej.com/post/2583891119/migrationfor-write-migrations-right-from-the-command</id>
+    <content type="html"><![CDATA[<p>As someone who mostly stays in the rails console, I’ve always hated forgetting a field, creating a migration, finding it among your other 500 migration files, then adding the one line you need to add, then running it. This is probably the most annoying part of the Rails experience. I’ve always wanted to write a better migration generator that could take a list of commands/fields and write the migration for you, since most of the time what you name a migration has all the info it needs (add_index_to_post_id). Thanks to the heavily refactored plugin/generator API in Rails 3, I was able to do just that.</p>
+
+<p>Let’s take a look at how it works:</p>
+
+<p>First, install it (only works for Rails 3)</p>
+
+<p><code>rails plugin install git://github.com/capotej/migration_for.git</code></p>
+
+<p>Then, you can create migrations like so:</p>
+
+<p><code>rails g migration_for add_index:posts:posts_id</code></p>
+
+<p>It would generate db/migrate/20110103182654_add_index_posts_posts_id.rb):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AddIndexPostsPostsId</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
+</span><span class='line'>    <span class="n">add_index</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;posts_id&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
+</span><span class='line'>    <span class="c1">#waiting for reversible migrations in rails 3.1!</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which you can then run normally with <code>rake db:migrate</code></p>
+
+<p>Let’s look at a more complex example:</p>
+
+<p><code>$ rails g migration_for create_table:posts add_column:posts:title:string add_column:posts:user_id:integer
+</code></p>
+
+<p>Would generate:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateTablePostsaddColumnPostsTitleStringaddColumnPostsUserIdIntegeraddIndexPostsUserId</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="s1">&#39;posts&#39;</span>
+</span><span class='line'>    <span class="n">add_column</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;title&#39;</span><span class="p">,</span><span class="s1">&#39;string&#39;</span>
+</span><span class='line'>    <span class="n">add_column</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span><span class="s1">&#39;integer&#39;</span>
+</span><span class='line'>    <span class="n">add_index</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;user_id&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
+</span><span class='line'>    <span class="c1">#waiting for reversible migrations in rails 3.1!</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It uses a lookup table with all the <a href="http://api.rubyonrails.org/classes/ActiveRecord/Migration.html">activerecord transformations</a> and will only insert an expression into a migration if the method name is valid and it has the right number of arguments, so botched commands wont mess up the migration. Hope you enjoy it as much as I have!</p>
+
+<p>Source available here: <a href="https://github.com/capotej/migration_for">https://github.com/capotej/migration_for</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What I released in 2010]]></title>
+    <link href="http://capotej.com/post/2546786852/what-i-released-in-2010"/>
+    <updated>2010-12-31T13:29:00-08:00</updated>
+    <id>http://capotej.com/post/2546786852/what-i-released-in-2010</id>
+    <content type="html"><![CDATA[<p>Here’s a recap of what I’ve worked on and released in 2010:</p>
+
+<h3><a href="https://github.com/capotej/youtube_fraiche">Youtube Fraiche</a></h3>
+
+<p>I couldn’t find a youtube downloader that worked on github, so I wrote my own one evening</p>
+
+<h3><a href="https://github.com/capotej/uploadd">Uploadd</a> and <a href="https://github.com/capotej/paperclip_uploadd">paperclip_uploadd</a></h3>
+
+<p>I wanted to upload and store images off-site (using paperclip/rails) on an server which has cheaper bandwidth rates than S3. Using rainbows, this tiny rack script has handled over a 1.5 million uploads at a peak of 10-15 uploads/sec. Also, it’s been running for about 6 months now without a single crash. Thank you Eric Wong!
+There is also a plugin for the popular paperclip gem to use uploadd as a storage backend transparently.</p>
+
+<h3><a href="https://github.com/capotej/mrskinner/blob/master/mrskinner.js">mrskinner</a></h3>
+
+<p>Tiny javascript for making the site gutters clickable based on a fixed width layout</p>
+
+<h3><a href="https://github.com/capotej/existential">existential</a></h3>
+
+<p>Completely inspired by Nick Kallen’s <a href="http://pivotallabs.com/users/nick/blog/articles/272-access-control-permissions-in-rails">post</a> on authorization, I wanted to extract that pattern into a rails plugin that I could use for all my projects. I use devise/existential for all my projects now.</p>
+
+<h3><a href="https://github.com/capotej/has_opengraph">has_opengraph</a></h3>
+
+<p>Easy way to participate in opengraph and draw facebook like buttons. Just annotate your models with meta data, and draw it in your view easily.</p>
+
+<h3><a href="https://github.com/capotej/chewbacca">chewbacca</a></h3>
+
+<p>I kinda feel bad that I took a cool name for such a lame script. Anyway it’s a set of rake tasks that provide a hair of abstraction above scp. Useful when you have a set of files locally that map to a different set of files remotely.</p>
+
+<p>I already have tons of stuff in the works for 2011!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Rack applications inside GWT Hosted mode]]></title>
+    <link href="http://capotej.com/post/145035194/using-rack-applications-inside-gwt-hosted-mode"/>
+    <updated>2009-07-19T18:51:00-07:00</updated>
+    <id>http://capotej.com/post/145035194/using-rack-applications-inside-gwt-hosted-mode</id>
+    <content type="html"><![CDATA[<p>This guide will show you how you can use JRuby to run any Rack application inside Google Web Toolkit’s (GWT) hosted mode server so your interface and your backend are of the Same Origin.</p>
+
+<p>BackgroundGWT has two ways of interacting with a server: GWT Remote Procedure Call (RPC) and plain HTTP (XHR). GWT-RPC is a high level library designed for interacting with server-side Java code. GWT-RPC implements the GWT Remote Service interface allowing you to call those methods from the user interface. Essentially, GWT handles the dirty work for you. However, it only works on Java backends that can implement that interface. Since most of my backends are Sinatra/Rack applications, I’ll be using the plain HTTP library.</p>
+
+<p>The problemDue to the restriction of the <a href="http://en.wikipedia.org/wiki/Same_origin_policy">Same Origin</a> policy, the interface served out of GWT’s development, or Hosted Mode server can only make requests back to itself. If you were using real servlets or GWT’s RemoteService this wouldn’t be an issue; but since Rack applications listen on their own port, you cannot make requests from GWT to our application without resorting to something like JSONP or server-side proxying. This leaves you having to compile our interface to HTML/JS/CSS, which is lengthy process, and serve it from the origin of the Rack application to see our changes.</p>
+
+<p>The solutionSince I wanted to develop using GWT’s development environment with a Rack backend, I devised a way to use jruby-rack to load arbitrary Rack applications alongside our interface.</p>
+
+<p>First let’s setup our environment:</p>
+
+<h3>Download and unpack the latest GWT for your platform (mine’s being linux)</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>wget http://google-web-toolkit.googlecode.com/files/gwt-linux-1.7.0.tar.bz2
+</span><span class='line'>tar -xvjpf gwt-linux-1.7.0.tar.bz2cd gwt-linux-1.7.0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Download the latest jruby-complete.jar</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>wget http://repository.codehaus.org/org/jruby/jruby-complete/1.3.1/jruby-complete-1.3.1.jar
+</span><span class='line'>mv jruby-complete-1.3.1.jar jruby-complete.jar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Download the latest jruby-rack.jar</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>wget http://repository.codehaus.org/org/jruby/rack/jruby-rack/0.9.4/jruby-rack-0.9.4.jar
+</span><span class='line'>mv jruby-rack-0.9.4.jar jruby-rack.jar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Create an app with webAppCreator</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>./webAppCreator -out MySinatra com.example.MySinatra
+</span><span class='line'><span class="nb">cd </span>MySinatra
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Package gem dependencies</h3>
+
+<p>In order for this to work you have to package any gem dependencies your backend needs (sinatra, in our case) as jars within your application. For Sinatra it looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>java -jar jruby-complete.jar -S gem install -i ./sinatra sinatra --no-rdoc --no-ri
+</span><span class='line'>jar cf sinatra.jar -C sinatra .
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Add jruby-complete.jar, jruby-rack.jar, sinatra.jar (and any other jars you’ve created) to the libs target of your build.xml</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;target</span> <span class="na">name=</span><span class="s">&quot;libs&quot;</span> <span class="na">description=</span><span class="s">&quot;Copy libs to WEB-INF/lib&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;mkdir</span> <span class="na">dir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;copy</span> <span class="na">todir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="na">file=</span><span class="s">&quot;${gwt.sdk}/gwt-servlet.jar&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!-- Add any additional server libs that need to be copied --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;copy</span> <span class="na">todir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="na">file=</span><span class="s">&quot;${gwt.sdk}/jruby-complete.jar&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;copy</span> <span class="na">todir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="na">file=</span><span class="s">&quot;${gwt.sdk}/jruby-rack.jar&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;copy</span> <span class="na">todir=</span><span class="s">&quot;war/WEB-INF/lib&quot;</span> <span class="na">file=</span><span class="s">&quot;${gwt.sdk}/sinatra.jar&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/target&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Add these lines right after <web-app> in war/WEB-INF/web.xml</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;context-param&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;param-name&gt;</span>rackup<span class="nt">&lt;/param-name&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;param-value&gt;</span>
+</span><span class='line'>    require &#39;rubygems&#39;
+</span><span class='line'>    require &#39;./lib/sinatra_app&#39;
+</span><span class='line'>    map &#39;/api&#39; do
+</span><span class='line'>      run MyApp 
+</span><span class='line'>    end
+</span><span class='line'>  <span class="nt">&lt;/param-value&gt;</span>
+</span><span class='line'><span class="nt">&lt;/context-param&gt;</span>
+</span><span class='line'><span class="nt">&lt;filter&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;filter-name&gt;</span>RackFilter<span class="nt">&lt;/filter-name&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;filter-class&gt;</span>org.jruby.rack.RackFilter<span class="nt">&lt;/filter-class&gt;</span>
+</span><span class='line'><span class="nt">&lt;/filter&gt;</span>
+</span><span class='line'><span class="nt">&lt;filter-mapping&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;filter-name&gt;</span>RackFilter<span class="nt">&lt;/filter-name&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;url-pattern&gt;</span>/api/*<span class="nt">&lt;/url-pattern&gt;</span>
+</span><span class='line'><span class="nt">&lt;/filter-mapping&gt;</span>
+</span><span class='line'><span class="nt">&lt;listener&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;listener-class&gt;</span>org.jruby.rack.RackServletContextListener<span class="nt">&lt;/listener-class&gt;</span>
+</span><span class='line'><span class="nt">&lt;/listener&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: All you’re doing here is passing the contents of a config.ru file into the <code>&lt;param-value&gt;</code> element for the <code>&lt;context-param&gt;</code> (make sure this is HTML encoded!). This states that any request to /api is to be handled by your Sinatra application and not GWT’s Hosted mode servlet.</p>
+
+<h3>Create your Sinatra backend and place it in war/WEB-INF/lib/sinatra_app.rb</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">MyApp</span> <span class="o">&lt;</span> <span class="no">Sinatra</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/showpage&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;http://www.yahoo.com&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/helloworld&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="s1">&#39;hello world&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Run your new awesome setup</h3>
+
+<p><code>ant hosted</code></p>
+
+<p>Now when navigate to <a href="http://localhost:8888/api/helloworld">http://localhost:8888/api/helloworld</a> or <a href="http://localhost:8888/api/showpage">http://localhost:8888/api/showpage</a> you should see the Sinatra application being served via GWT.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Rails Routing tips]]></title>
+    <link href="http://capotej.com/post/67873462/useful-rails-routing-tips"/>
+    <updated>2009-01-01T15:50:00-08:00</updated>
+    <id>http://capotej.com/post/67873462/useful-rails-routing-tips</id>
+    <content type="html"><![CDATA[<p>Even though I have been using Rails for fun and profit for about 2 years now, I felt I never really used it’s routing engine to its full potential. So I checked out new <a href="http://guides.rubyonrails.org/routing_outside_in.html">Rails Routing from the outside in</a> guide and discovered bunch of useful tricks that I (and maybe you) had no idea you could do. Here they are:</p>
+
+<h3>Multiple resource definitions on a single line</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">:videos</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Impose a certain format for resource identifiers</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:requirements</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="sr">/[A-Z][A-Z][0-9]+/</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This way, <code>/photos/3</code> would not work, but <code>/photos/DA321</code> would.</p>
+
+<h3>Friendlier action names</h3>
+
+<p>Say for your application ‘create’ and ‘change’ make more sense than the default ‘new’ and ‘edit’ you can do</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:path_names</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:new</span> <span class="o">=&gt;</span> <span class="s1">&#39;make&#39;</span><span class="p">,</span> <span class="ss">:edit</span> <span class="o">=&gt;</span> <span class="s1">&#39;change&#39;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also do this site-wide also, in your environment.rb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">action_controller</span><span class="o">.</span><span class="n">resources_path_names</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">:new</span> <span class="o">=&gt;</span> <span class="s1">&#39;make&#39;</span><span class="p">,</span> <span class="ss">:edit</span> <span class="o">=&gt;</span> <span class="s1">&#39;change&#39;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Trim the fat off resources with :only and :except</h3>
+
+<p>When you use map.resources, rails generates 7 restful routes for that resource; But what if that resource only needed to be seen and listed, never edited or created?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:only</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:index</span><span class="p">,</span> <span class="ss">:show</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If your application uses a lot of <code>map.resources</code> calls but not neccesarily all its generated routes, you can save memory this way.</p>
+
+<h3>Adding extra routes to your resources</h3>
+
+<p>Instead of fighting the <code>map.resources</code> generator by placing a horror like this atop your routes.rb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">connect</span> <span class="s1">&#39;/photos/:id/preview&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s1">&#39;preview&#39;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can do this to your already mapped resource</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:member</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:preview</span> <span class="o">=&gt;</span> <span class="ss">:get</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will map all GET’s to <code>/photos/3</code> to the preview action of your photos controller</p>
+
+<p>This can also be  used in collections instead of singular members, just change <code>:member</code> to <code>:collection</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">map</span><span class="o">.</span><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:collection</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:search</span> <span class="o">=&gt;</span> <span class="ss">:get</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will give you <code>/photos/search</code> and hit the search action within the photos controller</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[So you want to click that button?]]></title>
+    <link href="http://capotej.com/post/56866975/so-you-want-to-click-that-button"/>
+    <updated>2008-10-28T21:05:00-07:00</updated>
+    <id>http://capotej.com/post/56866975/so-you-want-to-click-that-button</id>
+    <content type="html"><![CDATA[<p>I stumbled upon<a href="http://clickthatbutton.com">http://clickthatbutton.com</a> during my routine lurking of<a href="http://news.ycombinator.com">hacker news</a> . After being amused for about 10 seconds,  I decided to take it to the next level; I wanted to click on it really, really fast. After going through a few solutions (simple js while loop in firebug, then curl/wget) and failing, the idea of using selenium popped into my head. So I went off to their<a href="http://selenium-ide.openqa.org/download.jsp">site</a> and installed the extension. I figured a simple recording of the mouse event, then wrapping it around a loop in selenium would do the trick, but I quickly found that selenium doesn’t support loops. Not to be stopped, I searched google and ended up with<a href="http://51elliot.blogspot.com/2008/02/selenium-ide-goto.html">this</a> . After installing the plugin for selenium (a plugin for a plugin!?) and restarting firefox, I tried it again and to my surprise it worked! The click counter was going up steadily on its own (18k clicks and counting). Here is my selenium test case for those of you following along:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class='line'><span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span>
+</span><span class='line'><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;head</span> <span class="na">profile=</span><span class="s">&quot;http://selenium-ide.openqa.org/profiles/test-case&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;selenium.base&quot;</span> <span class="na">href=</span><span class="s">&quot;http://clickthatbutton.com/&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;title&gt;</span>haha<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'><span class="nt">&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;body&gt;</span>
+</span><span class='line'><span class="nt">&lt;table</span> <span class="na">cellpadding=</span><span class="s">&quot;1&quot;</span> <span class="na">cellspacing=</span><span class="s">&quot;1&quot;</span> <span class="na">border=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;thead&gt;</span>
+</span><span class='line'><span class="nt">&lt;tr&gt;&lt;td</span> <span class="na">rowspan=</span><span class="s">&quot;1&quot;</span> <span class="na">colspan=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>haha<span class="nt">&lt;/td&gt;&lt;/tr&gt;</span>
+</span><span class='line'><span class="nt">&lt;/thead&gt;&lt;tbody&gt;</span>
+</span><span class='line'><span class="nt">&lt;tr&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>open<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>/<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+</span><span class='line'><span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'><span class="nt">&lt;tr&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>store<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>x<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>1<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'><span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'><span class="nt">&lt;tr&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>while<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>storedVars[&#39;x&#39;] == storedVars[&#39;x&#39;]<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+</span><span class='line'><span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'><span class="nt">&lt;tr&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>click<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>submit<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+</span><span class='line'><span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'><span class="nt">&lt;tr&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>endWhile<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+</span><span class='line'><span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/tbody&gt;&lt;/table&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Just paste that into a file, open it with selenium ide, hit play and you should be good to go.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Arrow key navigation for text fields]]></title>
+    <link href="http://capotej.com/post/54266325/arrow-key-navigation-for-text-fields"/>
+    <updated>2008-10-12T17:41:00-07:00</updated>
+    <id>http://capotej.com/post/54266325/arrow-key-navigation-for-text-fields</id>
+    <content type="html"><![CDATA[<p>Here is a class for enabling the use of arrow keys to navigate through a grid of input fields: (using mootools)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">FocusMover</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Class</span><span class="p">({</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">sel</span><span class="p">,</span> <span class="nx">col_num</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">sel</span> <span class="o">=</span> <span class="nx">sel</span>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">col_num</span> <span class="o">=</span> <span class="nx">col_num</span>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span> <span class="o">=</span> <span class="nx">$$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">sel</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">current_focus</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">){</span>
+</span><span class='line'>                        <span class="nx">item</span><span class="p">.</span><span class="nx">addEvent</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">){</span>
+</span><span class='line'>                                <span class="nx">$try</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                                        <span class="nx">self</span><span class="p">[</span><span class="nx">key</span><span class="p">.</span><span class="nx">key</span><span class="p">]()</span>
+</span><span class='line'>                                <span class="p">})</span>
+</span><span class='line'>                        <span class="p">})</span>
+</span><span class='line'>                        <span class="nx">item</span><span class="p">.</span><span class="nx">addEvent</span><span class="p">(</span><span class="s1">&#39;focus&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+</span><span class='line'>                                <span class="nx">self</span><span class="p">.</span><span class="nx">refresh</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+</span><span class='line'>                        <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="nx">item</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;myid&#39;</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">focus</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">refresh</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">current_focus</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;myid&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">down</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                <span class="nx">i</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">current_focus</span><span class="p">)</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">col_num</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">focus</span><span class="p">()</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">up</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                <span class="nx">i</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">current_focus</span><span class="p">)</span> <span class="o">-</span> <span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">col_num</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">focus</span><span class="p">()</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">left</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                <span class="nx">i</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">current_focus</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">focus</span><span class="p">()</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">right</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>                <span class="nx">i</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">current_focus</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>                <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">focus</span><span class="p">()</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, the constructor takes two arguments: a selector (which should return a list of all your input fields), and the number of input field columns. So for a 4x2 table, you would set it up like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">FM</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FocusMover</span><span class="p">(</span><span class="s1">&#39;#mytable input&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tabbing through fields vertically]]></title>
+    <link href="http://capotej.com/post/54058512/tabbing-through-fields-vertically"/>
+    <updated>2008-10-11T01:54:00-07:00</updated>
+    <id>http://capotej.com/post/54058512/tabbing-through-fields-vertically</id>
+    <content type="html"><![CDATA[<p>Sometimes it’s useful to switch the browser’s default tabbing behavior (left to right) to the opposite (top to bottom) when your input fields are in a grid layout instead the of the usual single column layout. Having to do this manually is a real pain, especially for large grids; So here is a solution in javascript, using mootools:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">addEvent</span><span class="p">(</span><span class="s1">&#39;domready&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">trs</span> <span class="o">=</span> <span class="nx">$$</span><span class="p">(</span><span class="s1">&#39;#mytable tr&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">accum</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="nx">trs</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">tr</span><span class="p">,</span> <span class="nx">trindex</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">accum</span> <span class="o">=</span> <span class="nx">trindex</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="nx">tr</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">().</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">td</span><span class="p">,</span> <span class="nx">tdindex</span><span class="p">){</span>
+</span><span class='line'>            <span class="nx">td</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">tabIndex</span> <span class="o">=</span> <span class="nx">accum</span>
+</span><span class='line'>            <span class="nx">accum</span> <span class="o">=</span> <span class="nx">accum</span> <span class="o">+</span> <span class="nx">trs</span><span class="p">.</span><span class="nx">length</span>
+</span><span class='line'>        <span class="p">})</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why MooTools (or Why not JQuery)]]></title>
+    <link href="http://capotej.com/post/52467447/why-mootools-or-why-not-jquery"/>
+    <updated>2008-09-30T10:26:00-07:00</updated>
+    <id>http://capotej.com/post/52467447/why-mootools-or-why-not-jquery</id>
+    <content type="html"><![CDATA[<h2>UPDATE 2012: this post is dumb and angsty, dont read</h2>
+
+<p>I’ve been toying around with MooTools a bit lately, and I’ve found the experience quite enjoyable and refreshing. Naturally, I <a href="http://twitter.com/capotej/statuses/939831956">twittered</a> about it and went along my merry way. Moments later (and much to my surprise), I had a direct message from John Resig himself asking “Why, what’s wrong with jQuery?”. I was pretty taken aback that he would take time from his surely busy day to message a total stranger in an effort to improve his project or at least gain an insight in the everyday life of a js developer (it’s not like DHH would personally message people that are dumping rails to use merb). I figured he deserved a straight, honest answer; One that at least would be longer than <a href="http://twitter.com/capotej/statuses/940082809">140 characters</a> (even though I managed to use every single one). So it begs the question, Why MooTools?</p>
+
+<ul>
+<li><p>Class support. JQuery’s SQL-like syntax is fine for quick and dirty javascripting, but eventually you’ll want real classes to structure your UI logic.</p></li>
+<li><p>It smells, feels and tastes like regular javascript. JQuery doesn’t even look like javascript, which isn’t necessarily a bad thing, since that’s kind of their goal. MooTools however, feels like just an extension of the language</p></li>
+<li><p>Faster. <a href="http://mootools.net/slickspeed/">‘Nuff Said</a> EDIT: This was pointed out to be false; It is only faster in certain cases (such as mine, WebKit nightly on OS X).</p></li>
+<li><p>Robert Penner’s easing equations baked right in.This could just be me, but I find the animations that mootools creates are alot smoother than JQuery’s (especially the easing).</p></li>
+<li><p>Creating new DOM elements is a snap.Need to create a dom element? <code>var el = new Element(‘a’, { ‘href’: ‘juliocapote.com’});</code> Done.</p></li>
+<li><p>Modular. I like that I can just build and pull down a moo.js that only contains the functionality I need.</p></li>
+<li><p>Better Documented.Or at least, its faster to find what you need.</p></li>
+<li><p>Easier to hack on and extend. While I haven’t personally delved into the internals of either system, the consensus seems to be that jquery is an unintelligible mess when it comes to modifying how it works.</p></li>
+<li><p>Prototype Approach (versus a namespaced approach) This is really just matter of preference; MooTools achieves it’s magic by just extending the prototypes of common objects (Array, String, etc); While this is obstrusive, it makes for shorter, more natural code. JQuery does its thing via a main object (which you can name, hence the namespace), that you wrap around whatever you want to make magical; This is unobstrusive, but you pay for that by having to wrap anything you want to use (which ends up being everything). It basically boils down to arr.each(fn) vs $.each(arr, fn)</p></li>
+<li><p>It’s not a revolution. It feels as if JQuery is trying to take on the world (it seems like it too, since its now included with visual studio and the nokia sdk). However, I’m not; I’m just trying to write some javascript here.</p></li>
+</ul>
+
+
+<p>It’s not like I’m never going to use JQuery again; It simply isn’t my default js framework any longer.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Highlight link based on current page in rails]]></title>
+    <link href="http://capotej.com/post/52081481/highlight-link-based-on-current-page-in-rails"/>
+    <updated>2008-09-27T19:47:00-07:00</updated>
+    <id>http://capotej.com/post/52081481/highlight-link-based-on-current-page-in-rails</id>
+    <content type="html"><![CDATA[<p>This is common pattern in website navigation, where it highlights the link (usually by setting <code>class=”active”</code>) that took you to the current page while you are on that page.</p>
+
+<p>First, define a helper:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">is_active?</span><span class="p">(</span><span class="n">page_name</span><span class="p">)</span>
+</span><span class='line'>  <span class="s2">&quot;active&quot;</span> <span class="k">if</span> <span class="n">params</span><span class="o">[</span><span class="ss">:action</span><span class="o">]</span> <span class="o">==</span> <span class="n">page_name</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then call it in your link_to’s in your layout as such:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">link_to</span> <span class="s1">&#39;Home&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="n">is_active?</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">link_to</span> <span class="s1">&#39;About&#39;</span><span class="p">,</span> <span class="s1">&#39;/about&#39;</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="n">is_active?</span><span class="p">(</span><span class="s2">&quot;about&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">link_to</span> <span class="s1">&#39;contact&#39;</span><span class="p">,</span> <span class="s1">&#39;/contact&#39;</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="n">is_active?</span><span class="p">(</span><span class="s2">&quot;contact&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This effect is achieved due to how link_to handles being passed <code>nil</code> for its <code>:class</code>, so when <code>is_active?</code> returns <code>nil</code> (because its not the current page), <code>link_to</code> outputs nothing as its class (not <code>class=””</code> as you might expect).</p>
 ]]></content>
   </entry>
   

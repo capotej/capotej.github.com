@@ -1,0 +1,152 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Why MooTools (or Why not JQuery) - @capotej</title>
+	<meta name="author" content="Julio Capote">
+
+	
+	<meta name="description" content="UPDATE 2012: this post is dumb and angsty, dont read I’ve been toying around with MooTools a bit lately, and I’ve found the experience quite &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="@capotej" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">@capotej</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:capotej.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/capotej" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/capotej" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+
+    <a class="pinboard" href="https://pinboard.com/u:capotej" title="Pinboard">Pinboard</a>
+
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:capotej.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Why MooTools (or Why Not JQuery)</h1>
+	<div class="entry-content"><h2>UPDATE 2012: this post is dumb and angsty, dont read</h2>
+
+<p>I’ve been toying around with MooTools a bit lately, and I’ve found the experience quite enjoyable and refreshing. Naturally, I <a href="http://twitter.com/capotej/statuses/939831956">twittered</a> about it and went along my merry way. Moments later (and much to my surprise), I had a direct message from John Resig himself asking “Why, what’s wrong with jQuery?”. I was pretty taken aback that he would take time from his surely busy day to message a total stranger in an effort to improve his project or at least gain an insight in the everyday life of a js developer (it’s not like DHH would personally message people that are dumping rails to use merb). I figured he deserved a straight, honest answer; One that at least would be longer than <a href="http://twitter.com/capotej/statuses/940082809">140 characters</a> (even though I managed to use every single one). So it begs the question, Why MooTools?</p>
+
+<ul>
+<li><p>Class support. JQuery’s SQL-like syntax is fine for quick and dirty javascripting, but eventually you’ll want real classes to structure your UI logic.</p></li>
+<li><p>It smells, feels and tastes like regular javascript. JQuery doesn’t even look like javascript, which isn’t necessarily a bad thing, since that’s kind of their goal. MooTools however, feels like just an extension of the language</p></li>
+<li><p>Faster. <a href="http://mootools.net/slickspeed/">‘Nuff Said</a> EDIT: This was pointed out to be false; It is only faster in certain cases (such as mine, WebKit nightly on OS X).</p></li>
+<li><p>Robert Penner’s easing equations baked right in.This could just be me, but I find the animations that mootools creates are alot smoother than JQuery’s (especially the easing).</p></li>
+<li><p>Creating new DOM elements is a snap.Need to create a dom element? <code>var el = new Element(‘a’, { ‘href’: ‘juliocapote.com’});</code> Done.</p></li>
+<li><p>Modular. I like that I can just build and pull down a moo.js that only contains the functionality I need.</p></li>
+<li><p>Better Documented.Or at least, its faster to find what you need.</p></li>
+<li><p>Easier to hack on and extend. While I haven’t personally delved into the internals of either system, the consensus seems to be that jquery is an unintelligible mess when it comes to modifying how it works.</p></li>
+<li><p>Prototype Approach (versus a namespaced approach) This is really just matter of preference; MooTools achieves it’s magic by just extending the prototypes of common objects (Array, String, etc); While this is obstrusive, it makes for shorter, more natural code. JQuery does its thing via a main object (which you can name, hence the namespace), that you wrap around whatever you want to make magical; This is unobstrusive, but you pay for that by having to wrap anything you want to use (which ends up being everything). It basically boils down to arr.each(fn) vs $.each(arr, fn)</p></li>
+<li><p>It’s not a revolution. It feels as if JQuery is trying to take on the world (it seems like it too, since its now included with visual studio and the nokia sdk). However, I’m not; I’m just trying to write some javascript here.</p></li>
+</ul>
+
+
+<p>It’s not like I’m never going to use JQuery again; It simply isn’t my default js framework any longer.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-09-30T10:26:00-07:00" pubdate data-updated="true">Sep 30<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Julio Capote
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>

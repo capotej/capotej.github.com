@@ -1,0 +1,322 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Finagle with scala-bootstrapper - @capotej</title>
+	<meta name="author" content="Julio Capote">
+
+	
+	<meta name="description" content="I&#8217;ve been fascinated by the concepts in finagle for some time, but being a scala noob, I never knew how to bootstrap a finagle project. Turns &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="@capotej" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">@capotej</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:capotej.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/capotej" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/capotej" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+
+    <a class="pinboard" href="https://pinboard.com/u:capotej" title="Pinboard">Pinboard</a>
+
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:capotej.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Finagle With Scala-bootstrapper</h1>
+	<div class="entry-content"><p>I&#8217;ve been fascinated by the concepts in <a href="http://twitter.github.com/finagle/">finagle</a> for some time, but being a scala noob, I never knew how to bootstrap a finagle project. Turns out twitter has a gem, <a href="https://github.com/twitter/scala-bootstrapper">scala-bootstrapper</a>, that generates a simple thirft based key/value store for you. There&#8217;s even a<a href="http://twitter.github.com/scala_school/searchbird.html">tutorial</a>  on how to extend the example project into a distributed search service.</p>
+
+<p>This is a guide on setting it all up locally, it assumes you have Git, Homebrew, and OS X.</p>
+
+<h3>Install scala 2.8.1</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>brew versions scala
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span>/usr/local/<span class="o">(</span>or wherever you have homebrew installed<span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>git checkout -b scala281 0e16b9d<span class="o">(</span>make sure the SHA matches versions output<span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>brew install scala
+</span><span class='line'><span class="nv">$ </span>git checkout master<span class="nv">$git</span> branch -D scala281
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install sbt 0.7.4 (assumes you have a ~/bin in your $PATH)</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl -O http://simple-build-tool.googlecode.com/files/sbt-launch-0.7.4.jar &gt; ~/bin/sbt-launch.jar
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;java -Xmx1G -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;&#39;</span>&gt; ~/bin/sbt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install scala-bootstrapper</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gem install scala-bootstrapper
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Generate finagle project**</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>mkdir newbird
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>newbird
+</span><span class='line'><span class="nv">$ </span>scala-bootstrapper newbird
+</span><span class='line'><span class="nv">$ </span>sbt update
+</span><span class='line'><span class="nv">$ </span>sbt <span class="nb">test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Add a Client class</h3>
+
+<p>create newbird/src/main/scala/com/twitter/newbird/Client.scala with</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">package</span> <span class="nn">com.twitter.newbird</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">import</span> <span class="nn">com.twitter.finagle.builder.ClientBuilder</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">com.twitter.finagle.thrift.ThriftClientFramedCodec</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">com.twitter.newbird.thrift._</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">org.apache.thrift.protocol.TBinaryProtocol</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">import</span> <span class="nn">java.net.InetSocketAddress</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Client</span> <span class="o">{</span><span class="err">  </span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">val</span> <span class="n">service</span> <span class="k">=</span> <span class="nc">ClientBuilder</span><span class="o">().</span><span class="n">hosts</span><span class="o">(</span><span class="nc">Seq</span><span class="o">(</span><span class="n">newInetSocketAddress</span><span class="o">(</span><span class="s">&quot;localhost&quot;</span><span class="o">,</span><span class="mi">9999</span><span class="o">)))</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">codec</span><span class="o">(</span><span class="nc">ThriftClientFramedCodec</span><span class="o">())</span><span class="err">    </span>
+</span><span class='line'>    <span class="o">.</span><span class="n">hostConnectionLimit</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span><span class="err">    </span>
+</span><span class='line'>    <span class="o">.</span><span class="n">build</span><span class="o">()</span><span class="err">  </span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">client</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">NewbirdServiceClientAdapter</span><span class="o">(</span>
+</span><span class='line'>    <span class="k">new</span> <span class="n">thrift</span><span class="o">.</span><span class="nc">NewbirdService</span><span class="o">.</span><span class="nc">ServiceToClient</span><span class="o">(</span><span class="n">service</span><span class="o">,</span><span class="n">newTBinaryProtocol</span><span class="o">.</span><span class="nc">Factory</span><span class="o">))</span><span class="err">  </span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="n">get</span><span class="o">(</span><span class="n">key</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="n">key</span><span class="o">)()</span><span class="err">  </span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">put</span><span class="o">(</span><span class="n">key</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span> <span class="n">value</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="n">client</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">)()</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Running the server</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>newbird
+</span><span class='line'><span class="nv">$ </span>sbt&gt; run -f config/development.scala
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Playing with the client**</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>newbird
+</span><span class='line'><span class="nv">$ </span>sbt console
+</span><span class='line'>scala&gt; import com.twitter.newbird.Client
+</span><span class='line'>scala&gt; val <span class="nv">client</span> <span class="o">=</span> new Client<span class="o">()</span>
+</span><span class='line'>scala&gt; client.put<span class="o">(</span><span class="s2">&quot;foo&quot;</span>,<span class="s2">&quot;bar&quot;</span><span class="o">)</span>
+</span><span class='line'>scala&gt; client.get<span class="o">(</span><span class="s2">&quot;foo&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Bonus</h3>
+
+<p>finagle exports a stats url you can curl:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl http://localhost:9900/stats.txt
+</span><span class='line'>counters:  Newbird/connects: 1  
+</span><span class='line'>Newbird/requests: 4  
+</span><span class='line'>Newbird/success: 4
+</span><span class='line'>gauges:  
+</span><span class='line'>  Newbird/connections: 0  
+</span><span class='line'>  Newbird/pending: 0  
+</span><span class='line'>  jvm_heap_committed: 588251136  
+</span><span class='line'>  jvm_heap_max: 2146828288  
+</span><span class='line'>  jvm_heap_used: 64354560  
+</span><span class='line'>  jvm_nonheap_committed: 83267584  
+</span><span class='line'>  jvm_nonheap_max: 318767104  
+</span><span class='line'>  jvm_nonheap_used: 68655360  
+</span><span class='line'>  jvm_num_cpus: 4  
+</span><span class='line'>  jvm_start_time: 1327511164928  
+</span><span class='line'>  jvm_thread_count: 14  
+</span><span class='line'>  jvm_thread_daemon_count: 9  
+</span><span class='line'>  jvm_thread_peak_count: 14  
+</span><span class='line'>  jvm_uptime: 2626505
+</span><span class='line'>labels:
+</span><span class='line'>  metrics:  
+</span><span class='line'>    Newbird/connection_duration: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>2590412, <span class="nv">count</span><span class="o">=</span>1, <span class="nv">maximum</span><span class="o">=</span>2590412, <span class="nv">minimum</span><span class="o">=</span>2590412, <span class="nv">p25</span><span class="o">=</span>2590412, <span class="nv">p50</span><span class="o">=</span>2590412, <span class="nv">p75</span><span class="o">=</span>2590412, <span class="nv">p90</span><span class="o">=</span>2590412, <span class="nv">p99</span><span class="o">=</span>2590412, <span class="nv">p999</span><span class="o">=</span>2590412, <span class="nv">p9999</span><span class="o">=</span>2590412<span class="o">)</span>  
+</span><span class='line'>    Newbird/connection_received_bytes: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>192, <span class="nv">count</span><span class="o">=</span>1, <span class="nv">maximum</span><span class="o">=</span>192, <span class="nv">minimum</span><span class="o">=</span>192, <span class="nv">p25</span><span class="o">=</span>192, <span class="nv">p50</span><span class="o">=</span>192, <span class="nv">p75</span><span class="o">=</span>192, <span class="nv">p90</span><span class="o">=</span>192, <span class="nv">p99</span><span class="o">=</span>192, <span class="nv">p999</span><span class="o">=</span>192, <span class="nv">p9999</span><span class="o">=</span>192<span class="o">)</span>  
+</span><span class='line'>    Newbird/connection_requests: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>4, <span class="nv">count</span><span class="o">=</span>1, <span class="nv">maximum</span><span class="o">=</span>4, <span class="nv">minimum</span><span class="o">=</span>4, <span class="nv">p25</span><span class="o">=</span>4, <span class="nv">p50</span><span class="o">=</span>4, <span class="nv">p75</span><span class="o">=</span>4, <span class="nv">p90</span><span class="o">=</span>4, <span class="nv">p99</span><span class="o">=</span>4, <span class="nv">p999</span><span class="o">=</span>4, <span class="nv">p9999</span><span class="o">=</span>4<span class="o">)</span>  
+</span><span class='line'>    Newbird/connection_sent_bytes: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>120, <span class="nv">count</span><span class="o">=</span>1, <span class="nv">maximum</span><span class="o">=</span>120, <span class="nv">minimum</span><span class="o">=</span>120, <span class="nv">p25</span><span class="o">=</span>120, <span class="nv">p50</span><span class="o">=</span>120, <span class="nv">p75</span><span class="o">=</span>120, <span class="nv">p90</span><span class="o">=</span>120, <span class="nv">p99</span><span class="o">=</span>120, <span class="nv">p999</span><span class="o">=</span>120, <span class="nv">p9999</span><span class="o">=</span>120<span class="o">)</span>  
+</span><span class='line'>    Newbird/request_latency_ms: <span class="o">(</span><span class="nv">average</span><span class="o">=</span>14, <span class="nv">count</span><span class="o">=</span>4, <span class="nv">maximum</span><span class="o">=</span>39, <span class="nv">minimum</span><span class="o">=</span>2, <span class="nv">p25</span><span class="o">=</span>2, <span class="nv">p50</span><span class="o">=</span>8, <span class="nv">p75</span><span class="o">=</span>10, <span class="nv">p90</span><span class="o">=</span>39, <span class="nv">p99</span><span class="o">=</span>39, <span class="nv">p999</span><span class="o">=</span>39, <span class="nv">p9999</span><span class="o">=</span>39<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> </p>
+
+<p> </p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-25T09:45:00-08:00" pubdate data-updated="true">Jan 25<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Julio Capote
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+
+
+
+
+</body>
+</html>
