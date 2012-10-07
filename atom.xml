@@ -4,7 +4,7 @@
   <title><![CDATA[@capotej]]></title>
   <link href="http://capotej.com/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-10-07T10:03:01-07:00</updated>
+  <updated>2012-10-07T10:28:24-07:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[Julio Capote]]></name>
@@ -12,6 +12,115 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[an embedded key/value store for shell scripts]]></title>
+    <link href="http://capotej.com/blog/2012/10/07/an-embedded-key-value-store-for-shell-scripts/"/>
+    <updated>2012-10-07T10:06:00-07:00</updated>
+    <id>http://capotej.com/blog/2012/10/07/an-embedded-key-value-store-for-shell-scripts</id>
+    <content type="html"><![CDATA[<p>Cooked this up last night when I needed a simple key/value store for use in a shell script:</p>
+
+<figure class='code'><figcaption><span>db.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">DBFILE</span><span class="o">=</span>example.db
+</span><span class='line'>
+</span><span class='line'>put<span class="o">(){</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;export kv_$1=$2&quot;</span> &gt;&gt; <span class="nv">$DBFILE</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>del<span class="o">(){</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;unset kv_$1&quot;</span> &gt;&gt; <span class="nv">$DBFILE</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>get<span class="o">(){</span>
+</span><span class='line'>  <span class="nb">source</span> <span class="nv">$DBFILE</span>
+</span><span class='line'>  <span class="nb">eval </span><span class="nv">r</span><span class="o">=</span><span class="se">\$</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;kv_$1&quot;</span><span class="k">)</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="nv">$r</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>list<span class="o">(){</span>
+</span><span class='line'>  <span class="nb">source</span> <span class="nv">$DBFILE</span>
+</span><span class='line'>  <span class="k">for </span>i in <span class="k">$(</span>env | grep <span class="s2">&quot;kv_&quot;</span> | cut -d<span class="o">=</span> -f1 <span class="k">)</span>; <span class="k">do</span>
+</span><span class='line'><span class="k">    </span><span class="nb">eval </span><span class="nv">r</span><span class="o">=</span><span class="se">\$</span><span class="nv">$i</span>; <span class="nb">echo</span> <span class="k">$(</span><span class="nb">echo</span> <span class="nv">$i</span> | sed -e <span class="s1">&#39;s/kv_//&#39;</span><span class="k">)</span> <span class="nv">$r</span>;
+</span><span class='line'>  <span class="k">done</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">## cmd dispatch</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">0</span><span class="k">}</span> <span class="o">==</span> <span class="s2">&quot;set&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span>put <span class="nv">$2</span> <span class="nv">$3</span>
+</span><span class='line'><span class="k">elif</span> <span class="o">[</span> <span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">0</span><span class="k">}</span> <span class="o">==</span> <span class="s2">&quot;get&quot;</span> <span class="o">]</span> ; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span>get <span class="nv">$2</span>
+</span><span class='line'><span class="k">elif</span> <span class="o">[</span> <span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">0</span><span class="k">}</span> <span class="o">==</span> <span class="s2">&quot;list&quot;</span> <span class="o">]</span> ; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span>list
+</span><span class='line'><span class="k">elif</span> <span class="o">[</span> <span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">0</span><span class="k">}</span> <span class="o">==</span> <span class="s2">&quot;del&quot;</span> <span class="o">]</span> ; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span>del <span class="nv">$2</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;unknown cmd&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Use it like so:</p>
+
+<p><code>$ ./db.sh set foo bar</code></p>
+
+<p><code>$ ./db.sh get foo</code></p>
+
+<p><code>$ ./db.sh set foo baz</code></p>
+
+<p><code>$ ./db.sh get foo</code></p>
+
+<p><code>$ ./db.sh del foo</code></p>
+
+<p><code>$ ./db.sh list</code></p>
+
+<h2>How it works</h2>
+
+<p>Every time you update/set/delete a value, it writes a shell expression to an append-only log,
+exporting a shell variable (key) with that value. By sourcing the file every time we read a value, we
+replay the log, bringing our environment to a consistent state. Then, reading the value is just looking
+up that dynamic variable (key) in our shell environment.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Finagle with scala-bootstrapper]]></title>
