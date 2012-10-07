@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "an embedded key/value store for shell scripts"
+title: "an embedded key / value store for shell scripts"
 date: 2012-10-07 10:06
 comments: true
 categories: ['shell scripting', 'databases']
