@@ -6,6 +6,8 @@ comments: true
 categories: ['shell scripting', 'databases']
 ---
 
+UPDATE: this is now available as a [sub](http://github.com/37signals/sub) command, here: [kiev](http://github.com/capotej/kiev)
+
 Cooked this up last night when I needed a simple key/value store for use in a shell script:
 
 ```sh db.sh
