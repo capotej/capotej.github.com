@@ -4,7 +4,7 @@
   <title><![CDATA[@capotej]]></title>
   <link href="http://capotej.com/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-10-07T10:30:39-07:00</updated>
+  <updated>2012-10-08T09:34:57-07:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[Julio Capote]]></name>
@@ -18,7 +18,9 @@
     <link href="http://capotej.com/blog/2012/10/07/an-embedded-key-value-store-for-shell-scripts/"/>
     <updated>2012-10-07T10:06:00-07:00</updated>
     <id>http://capotej.com/blog/2012/10/07/an-embedded-key-value-store-for-shell-scripts</id>
-    <content type="html"><![CDATA[<p>Cooked this up last night when I needed a simple key/value store for use in a shell script:</p>
+    <content type="html"><![CDATA[<p>UPDATE: this is now available as a <a href="http://github.com/37signals/sub">sub</a> command, here: <a href="http://github.com/capotej/kiev">kiev</a></p>
+
+<p>Cooked this up last night when I needed a simple key/value store for use in a shell script:</p>
 
 <figure class='code'><figcaption><span>db.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
