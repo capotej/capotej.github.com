@@ -4,7 +4,7 @@
   <title><![CDATA[@capotej]]></title>
   <link href="http://capotej.com/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-10-11T14:26:40-07:00</updated>
+  <updated>2012-11-01T16:39:42-07:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[Julio Capote]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[base: a scala project generator]]></title>
+    <link href="http://capotej.com/blog/2012/11/01/base-a-scala-project-generator/"/>
+    <updated>2012-11-01T14:39:00-07:00</updated>
+    <id>http://capotej.com/blog/2012/11/01/base-a-scala-project-generator</id>
+    <content type="html"><![CDATA[<p>Finally got tired of copy pasting other projects and gutting them to make new ones, so I created <a href="http://github.com/capotej/base">base</a>, a shell command that creates new scala projects.</p>
+
+<p>Creating the project:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>base new com.capotej.newproj
+</span><span class='line'>creating project: newproj
+</span><span class='line'>  creating App.scala
+</span><span class='line'>  creating AppSpec.scala
+</span><span class='line'>  creating pom.xml
+</span><span class='line'>  creating .gitignore
+</span><span class='line'>  creating .travis.yml
+</span><span class='line'>  creating LICENSE
+</span><span class='line'>  creating README.markdown
+</span><span class='line'>Done! run mvn scala:run to run your projec
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Based on the package name, it infered that the project name is <code>newproj</code> and created the project under that folder. Let&#8217;s build and run it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>newproj
+</span><span class='line'><span class="nv">$ </span>mvn compile scala:run
+</span><span class='line'><span class="o">(</span>... maven output ...<span class="o">)</span>
+</span><span class='line'>hello world
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This uses the new incremental compiler for maven, <a href="http://github.com/typesafehub/zinc">zinc</a>, which dramatically speeds up compile times (except for the first time you run it). It also sets you up with the latest scalatest maven plugin, which gives you sweet looking test output, like so:</p>
+
+<p><img src="http://i.imgur.com/qyyem.png" alt="" /></p>
+
+<p>See the base <a href="http://github.com/capotej/base#readme">README</a> for installation instructions.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[riak at posterous]]></title>

@@ -7,8 +7,7 @@
 	<meta name="author" content="Julio Capote">
 
 	
-	<meta name="description" content="A few months ago, I gave a presentation on how Posterous uses Riak for it&#8217;s post cache; At #ricon2012
-I ended up retelling this story to &hellip;">
+	<meta name="description" content="Finally got tired of copy pasting other projects and gutting them to make new ones, so I created base, a shell command that creates new scala &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +81,85 @@ I ended up retelling this story to &hellip;">
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/blog/2012/11/01/base-a-scala-project-generator/">Base: A Scala Project Generator</a></h1>
+	<div class="entry-content">
+		<p>Finally got tired of copy pasting other projects and gutting them to make new ones, so I created <a href="http://github.com/capotej/base">base</a>, a shell command that creates new scala projects.</p>
+
+<p>Creating the project:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>base new com.capotej.newproj
+</span><span class='line'>creating project: newproj
+</span><span class='line'>  creating App.scala
+</span><span class='line'>  creating AppSpec.scala
+</span><span class='line'>  creating pom.xml
+</span><span class='line'>  creating .gitignore
+</span><span class='line'>  creating .travis.yml
+</span><span class='line'>  creating LICENSE
+</span><span class='line'>  creating README.markdown
+</span><span class='line'>Done! run mvn scala:run to run your projec
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Based on the package name, it infered that the project name is <code>newproj</code> and created the project under that folder. Let&#8217;s build and run it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>newproj
+</span><span class='line'><span class="nv">$ </span>mvn compile scala:run
+</span><span class='line'><span class="o">(</span>... maven output ...<span class="o">)</span>
+</span><span class='line'>hello world
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This uses the new incremental compiler for maven, <a href="http://github.com/typesafehub/zinc">zinc</a>, which dramatically speeds up compile times (except for the first time you run it). It also sets you up with the latest scalatest maven plugin, which gives you sweet looking test output, like so:</p>
+
+<p><img src="http://i.imgur.com/qyyem.png" alt="" /></p>
+
+<p>See the base <a href="http://github.com/capotej/base#readme">README</a> for installation instructions.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T14:39:00-07:00" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/efficiency/'>efficiency</a>, <a class='category' href='/blog/categories/scala/'>scala</a>, <a class='category' href='/blog/categories/shell-scripting/'>shell scripting</a>
+
+
+</div>
+	
+</div></article>
 
 
     <article class="post">
@@ -798,64 +876,6 @@ up that dynamic variable (key) in our shell environment.</p>
 
 
 <time datetime="2011-01-03T09:48:00-08:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2011</time></div>
-	<div class="tags">
-
-</div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h1 class="title"><a href="/post/2546786852/what-i-released-in-2010">What I Released in 2010</a></h1>
-	<div class="entry-content">
-		<p>Here’s a recap of what I’ve worked on and released in 2010:</p>
-
-<h3><a href="https://github.com/capotej/youtube_fraiche">Youtube Fraiche</a></h3>
-
-<p>I couldn’t find a youtube downloader that worked on github, so I wrote my own one evening</p>
-
-<h3><a href="https://github.com/capotej/uploadd">Uploadd</a> and <a href="https://github.com/capotej/paperclip_uploadd">paperclip_uploadd</a></h3>
-
-<p>I wanted to upload and store images off-site (using paperclip/rails) on an server which has cheaper bandwidth rates than S3. Using rainbows, this tiny rack script has handled over a 1.5 million uploads at a peak of 10-15 uploads/sec. Also, it’s been running for about 6 months now without a single crash. Thank you Eric Wong!
-There is also a plugin for the popular paperclip gem to use uploadd as a storage backend transparently.</p>
-
-<h3><a href="https://github.com/capotej/mrskinner/blob/master/mrskinner.js">mrskinner</a></h3>
-
-<p>Tiny javascript for making the site gutters clickable based on a fixed width layout</p>
-
-<h3><a href="https://github.com/capotej/existential">existential</a></h3>
-
-<p>Completely inspired by Nick Kallen’s <a href="http://pivotallabs.com/users/nick/blog/articles/272-access-control-permissions-in-rails">post</a> on authorization, I wanted to extract that pattern into a rails plugin that I could use for all my projects. I use devise/existential for all my projects now.</p>
-
-<h3><a href="https://github.com/capotej/has_opengraph">has_opengraph</a></h3>
-
-<p>Easy way to participate in opengraph and draw facebook like buttons. Just annotate your models with meta data, and draw it in your view easily.</p>
-
-<h3><a href="https://github.com/capotej/chewbacca">chewbacca</a></h3>
-
-<p>I kinda feel bad that I took a cool name for such a lame script. Anyway it’s a set of rake tasks that provide a hair of abstraction above scp. Useful when you have a set of files locally that map to a different set of files remotely.</p>
-
-<p>I already have tons of stuff in the works for 2011!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-12-31T13:29:00-08:00" pubdate data-updated="true">Dec 31<span>st</span>, 2010</time></div>
 	<div class="tags">
 
 </div>

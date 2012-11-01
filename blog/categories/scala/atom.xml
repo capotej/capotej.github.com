@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: scala | @capotej]]></title>
+  <link href="http://capotej.com/blog/categories/scala/atom.xml" rel="self"/>
+  <link href="http://capotej.com/"/>
+  <updated>2012-11-01T16:39:42-07:00</updated>
+  <id>http://capotej.com/</id>
+  <author>
+    <name><![CDATA[Julio Capote]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[base: a scala project generator]]></title>
+    <link href="http://capotej.com/blog/2012/11/01/base-a-scala-project-generator/"/>
+    <updated>2012-11-01T14:39:00-07:00</updated>
+    <id>http://capotej.com/blog/2012/11/01/base-a-scala-project-generator</id>
+    <content type="html"><![CDATA[<p>Finally got tired of copy pasting other projects and gutting them to make new ones, so I created <a href="http://github.com/capotej/base">base</a>, a shell command that creates new scala projects.</p>
+
+<p>Creating the project:</p>
+
+<p><code>sh
+$ base new com.capotej.newproj
+creating project: newproj
+  creating App.scala
+  creating AppSpec.scala
+  creating pom.xml
+  creating .gitignore
+  creating .travis.yml
+  creating LICENSE
+  creating README.markdown
+Done! run mvn scala:run to run your projec
+</code></p>
+
+<p>Based on the package name, it infered that the project name is <code>newproj</code> and created the project under that folder. Let's build and run it:</p>
+
+<p><code>sh
+$ cd newproj
+$ mvn compile scala:run
+(... maven output ...)
+hello world
+</code></p>
+
+<p>This uses the new incremental compiler for maven, <a href="http://github.com/typesafehub/zinc">zinc</a>, which dramatically speeds up compile times (except for the first time you run it). It also sets you up with the latest scalatest maven plugin, which gives you sweet looking test output, like so:</p>
+
+<p><img src="http://i.imgur.com/qyyem.png" alt="" /></p>
+
+<p>See the base <a href="http://github.com/capotej/base#readme">README</a> for installation instructions.</p>
+]]></content>
+  </entry>
+  
+</feed>
