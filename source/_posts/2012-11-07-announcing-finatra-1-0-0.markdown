@@ -8,7 +8,7 @@ categories: ["finatra", "scala"]
 
 After months of work [Finatra](http://github.com/capotej/finatra#readme) 1.0.0 is finally available! Finatra is a scala web framework inspired by [Sinatra](http://github.com/sinatra/sinatra#readme) built on top of [Finagle](http://twitter.github.com/finagle).
 
-### The API
+### The API:
 
 The API looks like what you'd expect, here's a simple endpoint that uses route parameters:
 
@@ -20,6 +20,15 @@ get("/user/:username") { request =>
 ```
 
 The ```toFuture``` call means that the response is actually a [Future](http://twitter.github.com/scala_school/finagle.html#Future), a powerful concurrency abstraction worth checking out.
+
+Testing it is just as easy:
+
+```scala
+"GET /user/foo" should "responsd with hello foo" in {
+  get("/user/foo")
+  response.body should equal ("hello foo")
+}
+```
 
 ### A super quick demo:
 
@@ -46,6 +55,16 @@ hello world
 
 You can see the rest of the endpoints at ```/tmp/myapp/src/main/scala/com/example/myapp/App.scala```
 
+### Heroku integration
+
+The generated apps work in heroku out of the box:
+
+```sh
+$ heroku create
+$ git add .
+$ git commit -am 'stuff'
+$ git push heroku master
+```
 
 
 Make sure to see the full details in the [README](http://github.com/capotej/finatra#readme) and check out the [example app](http://github.com/capotej/finatra-example).
