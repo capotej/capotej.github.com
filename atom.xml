@@ -4,7 +4,7 @@
   <title><![CDATA[@capotej]]></title>
   <link href="http://capotej.com/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-11-07T22:18:48-08:00</updated>
+  <updated>2012-11-08T08:27:46-08:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[Julio Capote]]></name>
@@ -18,9 +18,9 @@
     <link href="http://capotej.com/blog/2012/11/07/announcing-finatra-1-0-0/"/>
     <updated>2012-11-07T21:20:00-08:00</updated>
     <id>http://capotej.com/blog/2012/11/07/announcing-finatra-1-0-0</id>
-    <content type="html"><![CDATA[<p>After months of work <a href="http://github.com/capotej/finatra#readme">Finatra</a> 1.0.0 is finally available! Finatra is a scala web framework inspired by <a href="http://github.com/sinatra/sinatra#readme">Sinatra</a> built on top of <a href="http://twitter.github.com/finagle">Finagle</a>.</p>
+    <content type="html"><![CDATA[<p>After months of work <a href="https://github.com/capotej/finatra#readme">Finatra</a> 1.0.0 is finally available! Finatra is a scala web framework inspired by <a href="https://github.com/sinatra/sinatra#readme">Sinatra</a> built on top of <a href="http://twitter.github.com/finagle">Finagle</a>.</p>
 
-<h3>The API:</h3>
+<h3>The API</h3>
 
 <p>The API looks like what you&#8217;d expect, here&#8217;s a simple endpoint that uses route parameters:</p>
 
@@ -50,12 +50,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>A super quick demo:</h3>
+<h3>A super quick demo</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git clone http://git@github.com:capotej/finatra.git
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git clone https://github.com/capotej/finatra.git
 </span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>finatra
 </span><span class='line'><span class="nv">$ </span>./finatra new com.example.myapp /tmp
 </span></code></pre></td></tr></table></div></figure>
@@ -89,14 +89,16 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
+<span class='line-number'>5</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>heroku create
+</span><span class='line'><span class="nv">$ </span>git init
 </span><span class='line'><span class="nv">$ </span>git add .
 </span><span class='line'><span class="nv">$ </span>git commit -am <span class="s1">&#39;stuff&#39;</span>
 </span><span class='line'><span class="nv">$ </span>git push heroku master
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Make sure to see the full details in the <a href="http://github.com/capotej/finatra#readme">README</a> and check out the <a href="http://github.com/capotej/finatra-example">example app</a>.</p>
+<p>Make sure to see the full details in the <a href="https://github.com/capotej/finatra#readme">README</a> and check out the <a href="https://github.com/capotej/finatra-example">example app</a>.</p>
 
 <p>Props to <a href="http://twitter.com/twoism">@twoism</a> and <a href="http://twitter.com/thisisfranklin">@thisisfranklin</a> for their code, feedback and moral support.</p>
 ]]></content>
