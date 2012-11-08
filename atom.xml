@@ -4,7 +4,7 @@
   <title><![CDATA[@capotej]]></title>
   <link href="http://capotej.com/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-11-01T16:39:42-07:00</updated>
+  <updated>2012-11-07T22:18:48-08:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[Julio Capote]]></name>
@@ -12,6 +12,95 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[announcing finatra 1.0.0]]></title>
+    <link href="http://capotej.com/blog/2012/11/07/announcing-finatra-1-0-0/"/>
+    <updated>2012-11-07T21:20:00-08:00</updated>
+    <id>http://capotej.com/blog/2012/11/07/announcing-finatra-1-0-0</id>
+    <content type="html"><![CDATA[<p>After months of work <a href="http://github.com/capotej/finatra#readme">Finatra</a> 1.0.0 is finally available! Finatra is a scala web framework inspired by <a href="http://github.com/sinatra/sinatra#readme">Sinatra</a> built on top of <a href="http://twitter.github.com/finagle">Finagle</a>.</p>
+
+<h3>The API:</h3>
+
+<p>The API looks like what you&#8217;d expect, here&#8217;s a simple endpoint that uses route parameters:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">get</span><span class="o">(</span><span class="s">&quot;/user/:username&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="n">request</span> <span class="k">=&gt;</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">username</span> <span class="k">=</span> <span class="n">request</span><span class="o">.</span><span class="n">routeParams</span><span class="o">.</span><span class="n">getOrElse</span><span class="o">(</span><span class="s">&quot;username&quot;</span><span class="o">,</span> <span class="s">&quot;default_user&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">render</span><span class="o">.</span><span class="n">plain</span><span class="o">(</span><span class="s">&quot;hello &quot;</span> <span class="o">+</span> <span class="n">username</span><span class="o">).</span><span class="n">toFuture</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>toFuture</code> call means that the response is actually a <a href="http://twitter.github.com/scala_school/finagle.html#Future">Future</a>, a powerful concurrency abstraction worth checking out.</p>
+
+<p>Testing it is just as easy:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="s">&quot;GET /user/foo&quot;</span> <span class="n">should</span> <span class="s">&quot;responsd with hello foo&quot;</span> <span class="n">in</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">get</span><span class="o">(</span><span class="s">&quot;/user/foo&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">response</span><span class="o">.</span><span class="n">body</span> <span class="n">should</span> <span class="n">equal</span> <span class="o">(</span><span class="s">&quot;hello foo&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>A super quick demo:</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git clone http://git@github.com:capotej/finatra.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>finatra
+</span><span class='line'><span class="nv">$ </span>./finatra new com.example.myapp /tmp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you have an <code>/tmp/myapp</code> you can use:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/myapp
+</span><span class='line'><span class="nv">$ </span>mvn scala:run
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A simple app should&#8217;ve started up locally on port 7070, verify with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl http://locahost:7070
+</span><span class='line'>hello world
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see the rest of the endpoints at <code>/tmp/myapp/src/main/scala/com/example/myapp/App.scala</code></p>
+
+<h3>Heroku integration</h3>
+
+<p>The generated apps work in heroku out of the box:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>heroku create
+</span><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -am <span class="s1">&#39;stuff&#39;</span>
+</span><span class='line'><span class="nv">$ </span>git push heroku master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Make sure to see the full details in the <a href="http://github.com/capotej/finatra#readme">README</a> and check out the <a href="http://github.com/capotej/finatra-example">example app</a>.</p>
+
+<p>Props to <a href="http://twitter.com/twoism">@twoism</a> and <a href="http://twitter.com/thisisfranklin">@thisisfranklin</a> for their code, feedback and moral support.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[base: a scala project generator]]></title>

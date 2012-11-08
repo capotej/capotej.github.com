@@ -7,7 +7,7 @@
 	<meta name="author" content="Julio Capote">
 
 	
-	<meta name="description" content="Here’s a recap of what I’ve worked on and released in 2010: Youtube Fraiche I couldn’t find a youtube downloader that worked on github, so I wrote &hellip;">
+	<meta name="description" content="As someone who mostly stays in the rails console, I’ve always hated forgetting a field, creating a migration, finding it among your other 500 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,118 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/post/2583891119/migrationfor-write-migrations-right-from-the-command">MigrationFor: Write Migrations Right From the Command Line!</a></h1>
+	<div class="entry-content">
+		<p>As someone who mostly stays in the rails console, I’ve always hated forgetting a field, creating a migration, finding it among your other 500 migration files, then adding the one line you need to add, then running it. This is probably the most annoying part of the Rails experience. I’ve always wanted to write a better migration generator that could take a list of commands/fields and write the migration for you, since most of the time what you name a migration has all the info it needs (add_index_to_post_id). Thanks to the heavily refactored plugin/generator API in Rails 3, I was able to do just that.</p>
+
+<p>Let’s take a look at how it works:</p>
+
+<p>First, install it (only works for Rails 3)</p>
+
+<p><code>rails plugin install git://github.com/capotej/migration_for.git</code></p>
+
+<p>Then, you can create migrations like so:</p>
+
+<p><code>rails g migration_for add_index:posts:posts_id</code></p>
+
+<p>It would generate db/migrate/20110103182654_add_index_posts_posts_id.rb):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AddIndexPostsPostsId</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
+</span><span class='line'>    <span class="n">add_index</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;posts_id&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
+</span><span class='line'>    <span class="c1">#waiting for reversible migrations in rails 3.1!</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which you can then run normally with <code>rake db:migrate</code></p>
+
+<p>Let’s look at a more complex example:</p>
+
+<p><code>$ rails g migration_for create_table:posts add_column:posts:title:string add_column:posts:user_id:integer
+</code></p>
+
+<p>Would generate:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateTablePostsaddColumnPostsTitleStringaddColumnPostsUserIdIntegeraddIndexPostsUserId</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="s1">&#39;posts&#39;</span>
+</span><span class='line'>    <span class="n">add_column</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;title&#39;</span><span class="p">,</span><span class="s1">&#39;string&#39;</span>
+</span><span class='line'>    <span class="n">add_column</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span><span class="s1">&#39;integer&#39;</span>
+</span><span class='line'>    <span class="n">add_index</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;user_id&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
+</span><span class='line'>    <span class="c1">#waiting for reversible migrations in rails 3.1!</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It uses a lookup table with all the <a href="http://api.rubyonrails.org/classes/ActiveRecord/Migration.html">activerecord transformations</a> and will only insert an expression into a migration if the method name is valid and it has the right number of arguments, so botched commands wont mess up the migration. Hope you enjoy it as much as I have!</p>
+
+<p>Source available here: <a href="https://github.com/capotej/migration_for">https://github.com/capotej/migration_for</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-03T09:48:00-08:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2011</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
 
 
     <article class="post">

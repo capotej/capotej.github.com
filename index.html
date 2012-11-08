@@ -7,7 +7,7 @@
 	<meta name="author" content="Julio Capote">
 
 	
-	<meta name="description" content="Finally got tired of copy pasting other projects and gutting them to make new ones, so I created base, a shell command that creates new scala &hellip;">
+	<meta name="description" content="After months of work Finatra 1.0.0 is finally available! Finatra is a scala web framework inspired by Sinatra built on top of Finagle. The API: The &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,121 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/blog/2012/11/07/announcing-finatra-1-0-0/">Announcing Finatra 1.0.0</a></h1>
+	<div class="entry-content">
+		<p>After months of work <a href="http://github.com/capotej/finatra#readme">Finatra</a> 1.0.0 is finally available! Finatra is a scala web framework inspired by <a href="http://github.com/sinatra/sinatra#readme">Sinatra</a> built on top of <a href="http://twitter.github.com/finagle">Finagle</a>.</p>
+
+<h3>The API:</h3>
+
+<p>The API looks like what you&#8217;d expect, here&#8217;s a simple endpoint that uses route parameters:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">get</span><span class="o">(</span><span class="s">&quot;/user/:username&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="n">request</span> <span class="k">=&gt;</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">username</span> <span class="k">=</span> <span class="n">request</span><span class="o">.</span><span class="n">routeParams</span><span class="o">.</span><span class="n">getOrElse</span><span class="o">(</span><span class="s">&quot;username&quot;</span><span class="o">,</span> <span class="s">&quot;default_user&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">render</span><span class="o">.</span><span class="n">plain</span><span class="o">(</span><span class="s">&quot;hello &quot;</span> <span class="o">+</span> <span class="n">username</span><span class="o">).</span><span class="n">toFuture</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>toFuture</code> call means that the response is actually a <a href="http://twitter.github.com/scala_school/finagle.html#Future">Future</a>, a powerful concurrency abstraction worth checking out.</p>
+
+<p>Testing it is just as easy:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="s">&quot;GET /user/foo&quot;</span> <span class="n">should</span> <span class="s">&quot;responsd with hello foo&quot;</span> <span class="n">in</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">get</span><span class="o">(</span><span class="s">&quot;/user/foo&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">response</span><span class="o">.</span><span class="n">body</span> <span class="n">should</span> <span class="n">equal</span> <span class="o">(</span><span class="s">&quot;hello foo&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>A super quick demo:</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git clone http://git@github.com:capotej/finatra.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>finatra
+</span><span class='line'><span class="nv">$ </span>./finatra new com.example.myapp /tmp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you have an <code>/tmp/myapp</code> you can use:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/myapp
+</span><span class='line'><span class="nv">$ </span>mvn scala:run
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A simple app should&#8217;ve started up locally on port 7070, verify with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl http://locahost:7070
+</span><span class='line'>hello world
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see the rest of the endpoints at <code>/tmp/myapp/src/main/scala/com/example/myapp/App.scala</code></p>
+
+<h3>Heroku integration</h3>
+
+<p>The generated apps work in heroku out of the box:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>heroku create
+</span><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -am <span class="s1">&#39;stuff&#39;</span>
+</span><span class='line'><span class="nv">$ </span>git push heroku master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Make sure to see the full details in the <a href="http://github.com/capotej/finatra#readme">README</a> and check out the <a href="http://github.com/capotej/finatra-example">example app</a>.</p>
+
+<p>Props to <a href="http://twitter.com/twoism">@twoism</a> and <a href="http://twitter.com/thisisfranklin">@thisisfranklin</a> for their code, feedback and moral support.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-07T21:20:00-08:00" pubdate data-updated="true">Nov 7<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/finatra/'>finatra</a>, <a class='category' href='/blog/categories/scala/'>scala</a>
+
+
+</div>
+	
+</div></article>
 
 
     <article class="post">
@@ -764,118 +879,6 @@ up that dynamic variable (key) in our shell environment.</p>
 
 
 <time datetime="2011-06-01T10:18:00-07:00" pubdate data-updated="true">Jun 1<span>st</span>, 2011</time></div>
-	<div class="tags">
-
-</div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h1 class="title"><a href="/post/2583891119/migrationfor-write-migrations-right-from-the-command">MigrationFor: Write Migrations Right From the Command Line!</a></h1>
-	<div class="entry-content">
-		<p>As someone who mostly stays in the rails console, I’ve always hated forgetting a field, creating a migration, finding it among your other 500 migration files, then adding the one line you need to add, then running it. This is probably the most annoying part of the Rails experience. I’ve always wanted to write a better migration generator that could take a list of commands/fields and write the migration for you, since most of the time what you name a migration has all the info it needs (add_index_to_post_id). Thanks to the heavily refactored plugin/generator API in Rails 3, I was able to do just that.</p>
-
-<p>Let’s take a look at how it works:</p>
-
-<p>First, install it (only works for Rails 3)</p>
-
-<p><code>rails plugin install git://github.com/capotej/migration_for.git</code></p>
-
-<p>Then, you can create migrations like so:</p>
-
-<p><code>rails g migration_for add_index:posts:posts_id</code></p>
-
-<p>It would generate db/migrate/20110103182654_add_index_posts_posts_id.rb):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AddIndexPostsPostsId</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
-</span><span class='line'>    <span class="n">add_index</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;posts_id&#39;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
-</span><span class='line'>    <span class="c1">#waiting for reversible migrations in rails 3.1!</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which you can then run normally with <code>rake db:migrate</code></p>
-
-<p>Let’s look at a more complex example:</p>
-
-<p><code>$ rails g migration_for create_table:posts add_column:posts:title:string add_column:posts:user_id:integer
-</code></p>
-
-<p>Would generate:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateTablePostsaddColumnPostsTitleStringaddColumnPostsUserIdIntegeraddIndexPostsUserId</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
-</span><span class='line'>    <span class="n">create_table</span> <span class="s1">&#39;posts&#39;</span>
-</span><span class='line'>    <span class="n">add_column</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;title&#39;</span><span class="p">,</span><span class="s1">&#39;string&#39;</span>
-</span><span class='line'>    <span class="n">add_column</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span><span class="s1">&#39;integer&#39;</span>
-</span><span class='line'>    <span class="n">add_index</span> <span class="s1">&#39;posts&#39;</span><span class="p">,</span><span class="s1">&#39;user_id&#39;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
-</span><span class='line'>    <span class="c1">#waiting for reversible migrations in rails 3.1!</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It uses a lookup table with all the <a href="http://api.rubyonrails.org/classes/ActiveRecord/Migration.html">activerecord transformations</a> and will only insert an expression into a migration if the method name is valid and it has the right number of arguments, so botched commands wont mess up the migration. Hope you enjoy it as much as I have!</p>
-
-<p>Source available here: <a href="https://github.com/capotej/migration_for">https://github.com/capotej/migration_for</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-03T09:48:00-08:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2011</time></div>
 	<div class="tags">
 
 </div>
