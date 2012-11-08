@@ -8,7 +8,7 @@ categories: ["finatra", "scala"]
 
 After months of work [Finatra](https://github.com/capotej/finatra#readme) 1.0.0 is finally available! Finatra is a scala web framework inspired by [Sinatra](https://github.com/sinatra/sinatra#readme) built on top of [Finagle](http://twitter.github.com/finagle).
 
-### The API:
+### The API
 
 The API looks like what you'd expect, here's a simple endpoint that uses route parameters:
 
@@ -30,7 +30,7 @@ Testing it is just as easy:
 }
 ```
 
-### A super quick demo:
+### A super quick demo
 
 ```sh
 $ git clone git@github.com:capotej/finatra.git
