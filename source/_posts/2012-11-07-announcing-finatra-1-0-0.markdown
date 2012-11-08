@@ -61,6 +61,7 @@ The generated apps work in heroku out of the box:
 
 ```sh
 $ heroku create
+$ git init
 $ git add .
 $ git commit -am 'stuff'
 $ git push heroku master
