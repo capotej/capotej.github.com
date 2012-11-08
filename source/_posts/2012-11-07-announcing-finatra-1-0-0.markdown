@@ -66,7 +66,6 @@ $ git commit -am 'stuff'
 $ git push heroku master
 ```
 
-
 Make sure to see the full details in the [README](https://github.com/capotej/finatra#readme) and check out the [example app](https://github.com/capotej/finatra-example).
 
 Props to [@twoism](http://twitter.com/twoism) and [@thisisfranklin](http://twitter.com/thisisfranklin) for their code, feedback and moral support.
