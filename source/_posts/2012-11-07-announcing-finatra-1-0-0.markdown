@@ -33,7 +33,7 @@ Testing it is just as easy:
 ### A super quick demo
 
 ```sh
-$ git clone git@github.com:capotej/finatra.git
+$ git clone https://github.com/capotej/finatra.git
 $ cd finatra
 $ ./finatra new com.example.myapp /tmp
 ```
