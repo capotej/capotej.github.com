@@ -6,7 +6,7 @@ comments: true
 categories: ["finatra", "scala"]
 ---
 
-After months of work [Finatra](http://github.com/capotej/finatra#readme) 1.0.0 is finally available! Finatra is a scala web framework inspired by [Sinatra](http://github.com/sinatra/sinatra#readme) built on top of [Finagle](http://twitter.github.com/finagle).
+After months of work [Finatra](https://github.com/capotej/finatra#readme) 1.0.0 is finally available! Finatra is a scala web framework inspired by [Sinatra](https://github.com/sinatra/sinatra#readme) built on top of [Finagle](http://twitter.github.com/finagle).
 
 ### The API:
 
@@ -33,7 +33,7 @@ Testing it is just as easy:
 ### A super quick demo:
 
 ```sh
-$ git clone http://git@github.com:capotej/finatra.git
+$ git clone git@github.com:capotej/finatra.git
 $ cd finatra
 $ ./finatra new com.example.myapp /tmp
 ```
@@ -67,7 +67,7 @@ $ git push heroku master
 ```
 
 
-Make sure to see the full details in the [README](http://github.com/capotej/finatra#readme) and check out the [example app](http://github.com/capotej/finatra-example).
+Make sure to see the full details in the [README](https://github.com/capotej/finatra#readme) and check out the [example app](https://github.com/capotej/finatra-example).
 
 Props to [@twoism](http://twitter.com/twoism) and [@thisisfranklin](http://twitter.com/thisisfranklin) for their code, feedback and moral support.
 
