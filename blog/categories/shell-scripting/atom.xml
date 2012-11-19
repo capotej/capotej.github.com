@@ -4,7 +4,7 @@
   <title><![CDATA[Category: shell scripting | @capotej]]></title>
   <link href="http://capotej.com/blog/categories/shell-scripting/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-11-18T18:46:40-08:00</updated>
+  <updated>2012-11-18T19:23:03-08:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[Julio Capote]]></name>
@@ -12,114 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[making code generators from your app]]></title>
-    <link href="http://capotej.com/blog/2012/11/13/making-code-generators-from-your-app/"/>
-    <updated>2012-11-13T21:31:00-08:00</updated>
-    <id>http://capotej.com/blog/2012/11/13/making-code-generators-from-your-app</id>
-    <content type="html"><![CDATA[<p>Whenever I released a new version of <a href="https://github.com/capotej/finatra#readme">Finatra</a>, I always had update a few things so everything was on the latest version and code:</p>
-
-<p>1) The version in the xml fragment of the main README.markdown has to change</p>
-
-<p>2) The version in the pom.xml of the example app has to change</p>
-
-<p>3) Any api changes, if any, have to be updated in the example app</p>
-
-<p>4) The version in the template pom.xml of the app generator has to change</p>
-
-<p>5) Any api changes, if any, have to be updated inside the app template</p>
-
-<p>After messing this up a few times, I created a <a href="https://github.com/37signals/sub#readme">sub</a> script that generates the example app, the README, <em>and</em> the app generator, straight from unit test! Here's how I did it:</p>
-
-<h2>The source of truth</h2>
-
-<p>A common problem with code generators is the source code they generate quickly becomes out of date, because the templates aren't updated as often as the api changes in the framework. To avoid this, I made a special unit test that I'd use as the "seed" for my generator. A short example:</p>
-
-<p>```scala ExampleAppSpec.scala
-class ExampleSpec extends SpecHelper {</p>
-
-<p>  /<em> ###BEGIN_APP### </em>/</p>
-
-<p>  class ExampleApp extends Controller {</p>
-
-<pre><code>/**
- * Basic Example
- *
- * curl http://localhost:7070/hello =&gt; "hello world"
- */
-get("/") { request =&gt;
-  render.plain("hello world").toFuture
-}
-</code></pre>
-
-<p>  val app = new ExampleApp</p>
-
-<p>  /<em> ###END_APP### </em>/</p>
-
-<p>  /<em> ###BEGIN_SPEC### </em>/</p>
-
-<p>  "GET /hello" should "respond with hello world" in {</p>
-
-<pre><code>get("/")
-response.body should equal ("hello world")
-</code></pre>
-
-<p>  }</p>
-
-<p>  /<em> ###END_SPEC### </em>/
-}
-```</p>
-
-<p>Using the special comments, I can extract a sample app a test suite from the source code.</p>
-
-<h2>The app generator</h2>
-
-<p>Now that we have our "template", we can build our app generator to use it. I customized <a href="http://capotej.com/blog/2012/11/01/base-a-scala-project-generator/">base</a> and ended up with: <a href="https://github.com/capotej/finatra/blob/master/script/finatra/libexec/finatra-new">script/finatra/libexec/finatra-new</a></p>
-
-<p>You can then run</p>
-
-<p><code>sh
-$ ./finatra new com.example.myapp
-</code></p>
-
-<p>and it will generate <code>myapp/</code> based on the tested example code from the test suite above!</p>
-
-<h2>The example app</h2>
-
-<p>This command uses the generator to generates/update <a href="https://github.com/capotej/finatra-example">finatra-example</a></p>
-
-<p>```sh</p>
-
-<h1>!/bin/bash</h1>
-
-<h1>Usage: finatra update-example</h1>
-
-<h1>Summary: generates the example app from the template</h1>
-
-<p>set -e</p>
-
-<p>source $_FINATRA_ROOT/lib/base.sh</p>
-
-<p>tmpdir=$(mktemp -d /tmp/finatra_example.XXX)</p>
-
-<p>$_FINATRA_ROOT/bin/finatra new com.twitter.finatra_example $tmpdir</p>
-
-<p>cp -Rv $tmpdir/finatra_example/ $EXAMPLE_REPO</p>
-
-<p>rm -rf $tmpdir</p>
-
-<p>cd $EXAMPLE_REPO &amp;&amp; mvn test</p>
-
-<p>```</p>
-
-<p>This also has the neat side effect of testing the app generator and the generated app.</p>
-
-<h2>Updating the README's</h2>
-
-<p>I also have a <a href="https://github.com/capotej/finatra/blob/master/script/finatra/libexec/finatra-update-readme">command</a> for updating the README with fresh examples and version numbers.</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[base: a scala project generator]]></title>
