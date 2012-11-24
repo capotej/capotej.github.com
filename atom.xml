@@ -4,7 +4,7 @@
   <title><![CDATA[@capotej]]></title>
   <link href="http://capotej.com/atom.xml" rel="self"/>
   <link href="http://capotej.com/"/>
-  <updated>2012-11-18T20:38:40-08:00</updated>
+  <updated>2012-11-23T22:59:47-08:00</updated>
   <id>http://capotej.com/</id>
   <author>
     <name><![CDATA[Julio Capote]]></name>
@@ -12,6 +12,166 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[automatic high quality releases]]></title>
+    <link href="http://capotej.com/blog/2012/11/13/automatic-high-quality-releases/"/>
+    <updated>2012-11-13T21:31:00-08:00</updated>
+    <id>http://capotej.com/blog/2012/11/13/automatic-high-quality-releases</id>
+    <content type="html"><![CDATA[<p>Recently, I invested some time into automating some of the work that goes into a <a href="http://github.com/capotej/finatra#readme">Finatra</a> release.</p>
+
+<p>The work consists of updating:</p>
+
+<ul>
+<li><p>The version in the XML fragment of the main <a href="https://github.com/finatra/https://github.com/capotej/finatra/blob/master/README.markdown">README.markdown</a></p></li>
+<li><p>The version in the <a href="https://github.com/capotej/finatra-example/blob/master/pom.xml">pom.xml</a> of the <a href="http://github.com/capotej/finatra-example">example app</a></p></li>
+<li><p>Any API changes in the <a href="http://github.com/capotej/finatra-example">example app</a></p></li>
+<li><p>The version in the template pom.xml of the app generator</p></li>
+<li><p>The generated unit test of the app generator that demonstrates testing any new API features</p></li>
+<li><p>Any API changes inside the app template of the app generator</p></li>
+</ul>
+
+
+<p>Using <a href="https://github.com/37signals/sub#readme">sub</a>, I was able to create a <code>finatra</code> <a href="https://github.com/capotej/finatra/tree/master/script/finatra">command</a> that automated all of the above based on a single template, which also happens to be the <a href="https://github.com/capotej/finatra/blob/master/src/test/scala/com/twitter/finatra/ExampleSpec.scala">main unit test</a>. This ensures that the README, the example app, and the app generator never fall out of sync with the frameworks API.</p>
+
+<p>Last week we released <a href="https://github.com/capotej/finatra/commit/37c81957271dde77d4c3f6361bbae705a5142c89">1.1.0</a>, and the README was <a href="https://github.com/capotej/finatra/commit/913d0ed5bfa18c903feb5779d4d8b9d87703b6c5">completely generated</a>, as was the <a href="https://github.com/capotej/finatra-example/commit/dbc82908360f3cb4cfc4388c28f593f17258fab2">example app</a>. Not to mention, all generated apps would also contain the latest templates and examples!</p>
+
+<p><img src="http://i0.kym-cdn.com/photos/images/original/000/021/073/1254172884282.jpg?1254173845" alt="" /></p>
+
+<p>Let&#8217;s dive into how it all works:</p>
+
+<h2>The source of truth</h2>
+
+<p>I annotated our main unit test with special tokens, like so:</p>
+
+<figure class='code'><figcaption><span>ExampleAppSpec.scala</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">SpecHelper</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/* ###BEGIN_APP### */</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">ExampleApp</span> <span class="k">extends</span> <span class="nc">Controller</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/**</span>
+</span><span class='line'><span class="cm">     * Basic Example</span>
+</span><span class='line'><span class="cm">     *</span>
+</span><span class='line'><span class="cm">     * curl http://localhost:7070/hello =&gt; &quot;hello world&quot;</span>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>    <span class="n">get</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="n">request</span> <span class="k">=&gt;</span>
+</span><span class='line'>      <span class="n">render</span><span class="o">.</span><span class="n">plain</span><span class="o">(</span><span class="s">&quot;hello world&quot;</span><span class="o">).</span><span class="n">toFuture</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">val</span> <span class="n">app</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">ExampleApp</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/* ###END_APP### */</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/* ###BEGIN_SPEC### */</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="s">&quot;GET /hello&quot;</span> <span class="n">should</span> <span class="s">&quot;respond with hello world&quot;</span> <span class="n">in</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">get</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="n">response</span><span class="o">.</span><span class="n">body</span> <span class="n">should</span> <span class="n">equal</span> <span class="o">(</span><span class="s">&quot;hello world&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/* ###END_SPEC### */</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the special <code>/* ### */</code> comments, the main app and its test can be extracted from the code of our test.</p>
+
+<h2>The app generator</h2>
+
+<p>Now that we have our &#8220;template&#8221;, we can build our app generator to use it. I customized <a href="http://capotej.com/blog/2012/11/01/base-a-scala-project-generator/">base</a> and ended up with: <a href="https://github.com/capotej/finatra/blob/master/script/finatra/libexec/finatra-new">script/finatra/libexec/finatra-new</a></p>
+
+<p>You can then run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./finatra new com.example.myapp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and it will generate <code>myapp/</code> based on the tested example code from the test suite above.</p>
+
+<h2>The example app</h2>
+
+<p>The <a href="https://github.com/capotej/finatra-example#readme">example app</a> is just a generated app using the latest app generator:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="c"># Usage: finatra update-example</span>
+</span><span class='line'><span class="c"># Summary: generates the example app from the template</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -e
+</span><span class='line'>
+</span><span class='line'><span class="nb">source</span> <span class="nv">$_FINATRA_ROOT</span>/lib/base.sh
+</span><span class='line'>
+</span><span class='line'><span class="nv">tmpdir</span><span class="o">=</span><span class="k">$(</span>mktemp -d /tmp/finatra_example.XXX<span class="k">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$_FINATRA_ROOT</span>/bin/finatra new com.twitter.finatra_example <span class="nv">$tmpdir</span>
+</span><span class='line'>
+</span><span class='line'>cp -Rv <span class="nv">$tmpdir</span>/finatra_example/ <span class="nv">$EXAMPLE_REPO</span>
+</span><span class='line'>
+</span><span class='line'>rm -rf <span class="nv">$tmpdir</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">cd</span> <span class="nv">$EXAMPLE_REPO</span> <span class="o">&amp;&amp;</span> mvn <span class="nb">test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This also tests the app generator and the generated app!</p>
+
+<h2>Updating the README</h2>
+
+<p>Lastly, there&#8217;s a <a href="https://github.com/capotej/finatra/blob/master/script/finatra/libexec/finatra-update-readme">command</a> for updating the README with the new example and version number.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[announcing finatra 1.0.0]]></title>

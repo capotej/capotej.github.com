@@ -2,96 +2,104 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://capotej.com/post/52081481/highlight-link-based-on-current-page-in-rails</loc>
-        <lastmod>2012-10-02T23:39:47-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/post/52467447/why-mootools-or-why-not-jquery</loc>
-        <lastmod>2012-10-02T23:36:41-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/post/54058512/tabbing-through-fields-vertically</loc>
-        <lastmod>2012-10-02T22:00:25-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/post/54266325/arrow-key-navigation-for-text-fields</loc>
-        <lastmod>2012-10-02T23:40:26-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/post/56866975/so-you-want-to-click-that-button</loc>
-        <lastmod>2012-10-02T22:10:15-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/post/67873462/useful-rails-routing-tips</loc>
-        <lastmod>2012-10-02T23:31:08-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>
             http://capotej.com/post/145035194/using-rack-applications-inside-gwt-hosted-mode
         </loc>
-        <lastmod>2012-10-02T23:27:29-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/post/2546786852/what-i-released-in-2010</loc>
-        <lastmod>2012-10-02T23:17:32-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>
             http://capotej.com/post/2583891119/migrationfor-write-migrations-right-from-the-command
         </loc>
-        <lastmod>2012-10-02T22:53:02-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/my-cloud-experiment</loc>
-        <lastmod>2012-10-02T22:46:08-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/sane-lion-gestures</loc>
-        <lastmod>2012-10-02T23:05:21-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/dont-pee-in-the-pool</loc>
-        <lastmod>2012-10-02T23:08:25-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/render-image-links-directly-inside-adium</loc>
-        <lastmod>2012-10-02T23:06:07-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/alfred-extension-for-creating-wunderlist-task</loc>
-        <lastmod>2012-10-02T22:41:53-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/finagle-with-scala-bootstrapper</loc>
-        <lastmod>2012-10-02T22:36:06-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>
             http://capotej.com/blog/2012/10/07/an-embedded-key-value-store-for-shell-scripts/
         </loc>
-        <lastmod>2012-10-08T09:33:48-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/blog/2012/10/11/riak-at-posterous/</loc>
-        <lastmod>2012-10-11T14:26:40-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/blog/2012/11/01/base-a-scala-project-generator/</loc>
-        <lastmod>2012-11-01T16:39:41-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/blog/2012/11/07/announcing-finatra-1-0-0/</loc>
-        <lastmod>2012-11-08T08:27:50-08:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://capotej.com/blog/2012/11/13/automatic-high-quality-releases/</loc>
+        <lastmod>2012-11-23T22:58:45-08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://capotej.com/about/</loc>
+        <lastmod>2012-11-23T22:58:45-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/blog/archives/</loc>
-        <lastmod>2012-11-08T08:27:50-08:00</lastmod>
+        <lastmod>2012-11-23T22:58:45-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/</loc>
-        <lastmod>2012-11-08T08:27:50-08:00</lastmod>
+        <lastmod>2012-11-23T22:58:45-08:00</lastmod>
     </url>
     <url>
         <loc>http://capotej.com/projects/</loc>
-        <lastmod>2012-09-30T22:12:45-07:00</lastmod>
+        <lastmod>2012-11-23T22:58:34-08:00</lastmod>
     </url>
 </urlset>
