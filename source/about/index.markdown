@@ -7,4 +7,10 @@ sharing: false
 footer: true
 ---
 
-asdasdas
+![](/images/juliocapote.png)
+
+I'm Julio Capote, I was born in Cuba and moved to the United States when I was 4 years old. Computing is my religion.
+
+
+
+
